@@ -1,0 +1,153 @@
+.cbp-item.sixteen-nine img {
+  overflow: hidden;
+  object-fit: cover;
+  height: 270px;
+}
+
+.cbp-caption-defaultWrap.sixteen-nine-img {width: 100%;overflow: hidden;margin: 0;padding-top: 56.25%;position: relative;}
+.cbp-caption-defaultWrap.sixteen-nine-img img{position: absolute;top: 50%;left: 50%; width: 100%; transform: translate(-50%, -50%);}
+.cbp-caption-zoom .cbp-caption-activeWrap {background-color: rgba(230, 233, 237, 0.8);}
+.cbp-caption-activeWrap {background-color:#e6e9ed}
+.cbp-l-caption-alignLeft .cbp-l-caption-body{color:#013e7d;}
+.cbp-slider-edge .cbp-nav-next, .cbp-slider-edge .cbp-nav-prev {background:rgba(230,233,237,0.5)}
+.cbp-slider-edge .cbp-nav-next:hover, .cbp-slider-edge .cbp-nav-prev:hover {background:rgba(230,233,237,1)}
+.cbp-nav-no .cbp-nav {display:none}
+
+ul.events {
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+ul.events > li a:last-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+}
+
+ul.events > li a:first-child {
+  margin-bottom: 0;
+  border-bottom-right-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+}
+
+ul.events > li a {
+
+  padding: .25rem .4rem;
+  line-height: 1.3rem;
+  color: #000;
+  position: relative;
+  display: block;
+  font-size: 0.8em;
+  background-color: #cde6f7;
+}
+
+
+ul.events > li a.day_info_month{
+  background-color: #cde6f7;
+}
+
+.calendarize .calendar__border {
+  border-bottom: 1px solid #e0e0e0;
+  border-right: #e0e0e0 1px solid;
+}
+.calendarize .container-fluid  {
+  border-top: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+
+}
+.calendarize .not-current-month {
+  background-color: #f7f7f7;
+}
+
+
+.calendarize .month-cell{
+  line-height: 2rem;
+  padding-left: 8px;
+  color: #757575;
+}
+
+.calendarize .day-cell{
+  font-size: .8rem;
+  line-height: 2rem;
+  padding-left: 8px;
+  color: #757575;
+}
+
+.seven-cols {
+  display: flex;
+  flex-wrap: wrap;
+}
+.seven-cols > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+
+@media (min-width: 768px){
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1  {
+    width: 100%;
+    *width: 100%;
+  }
+  .day_info_year {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 992px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+  }
+
+  .day_info_year {
+    display: inline-block;
+  }
+  }
+
+
+/**
+ *  The following is not really needed in this case
+ *  Only to demonstrate the usage of @media for large screens
+ */
+@media (min-width: 1200px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+  }
+  .events {
+    font-size:10px;
+    /*display: none;*/
+  }
+}
+
+.selectedDay {
+  background-color: #00aced;
+  color: #fff !important;
+
+}
+
+.hasEvents {
+
+}
+
+
+.weekDay {
+  background-color: #00aced;
+  color: #fff !important;
+}
+.badge {
+  background-color: #00aced !important;
+}
+.weekDay .day-cell{
+  background-color: #00aced;
+  color: #fff !important;
+}

@@ -1,0 +1,29 @@
+HTTrack3.50-5 launched on Tue, 20 Oct 2026 15:32:35 at https://sv-hagenbuechach.de/ +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar
+(winhttrack -qwC2%Ps2u1%s%uN0%I0p3DaK0H0%kf2%f#f -F "Mozilla/5.0 (compatible; HTTrack; +https://www.httrack.com/)" -%F "<!-- Mirrored from {url} by HTTrack Website Copier/3.x [XR&CO], {date} -->" -%l "de, en, *" https://sv-hagenbuechach.de/ -O1 "C:\Meine Webseiten\sv-hagenbuechach.de" +*.png +*.gif +*.jpg +*.jpeg +*.css +*.js -ad.doubleclick.net/* -mime:application/foobar )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+15:38:48	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/gtm.js (from www.google-analytics.com/analytics.js)
+15:38:48	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/plugins/ (from www.google-analytics.com/analytics.js)
+15:38:48	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/verein/manifest.json (from https://sv-hagenbuechach.de/verein/mitglied-werden)
+15:42:59	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/rechtliches/manifest.json (from https://sv-hagenbuechach.de/rechtliches/vorstand)
+15:42:59	Error: 	"Forbidden" (403) at link https://sv-hagenbuechach.de/fileadmin/user_upload/_temp_/logoguenthers.png (from https://sv-hagenbuechach.de/verein/ausruestung)
+15:42:59	Error: 	"Forbidden" (403) at link https://sv-hagenbuechach.de/fileadmin/user_upload/_temp_/logo_guenther_s.jpg (from https://sv-hagenbuechach.de/verein/ausruestung)
+15:42:59	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/fussball/herren/manifest.json (from https://sv-hagenbuechach.de/fussball/herren/1-mannschaft)
+15:42:59	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/fussball/jugend/manifest.json (from https://sv-hagenbuechach.de/fussball/jugend/a-jugend)
+15:42:59	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/fussball/jugend/tel.:+491728479737‬ (from https://sv-hagenbuechach.de/fussball/jugend/d-jugend)
+15:42:59	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/tischtennis/manifest.json (from https://sv-hagenbuechach.de/tischtennis/herren)
+15:42:59	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/tischtennis/kontakt-/manifest.json (from https://sv-hagenbuechach.de/tischtennis/kontakt-/-hygieneregeln)
+15:43:20	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/fitness/manifest.json (from https://sv-hagenbuechach.de/fitness/full-body-workout)
+15:43:20	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/verein/beitraege/manifest.json (from https://sv-hagenbuechach.de/verein/beitraege/details?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=180&cHash=2c0b5320dfd7b651f5a12d9581da4033)
+15:43:20	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/verein/beitraege/details (from https://sv-hagenbuechach.de/verein/beitraege/details?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=180&cHash=2c0b5320dfd7b651f5a12d9581da4033)
+15:43:20	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/verein/events/manifest.json (from https://sv-hagenbuechach.de/verein/events/details?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=177&cHash=84cdc000c1fabfe1e89084c4489078f5)
+15:43:20	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/verein/events/details (from https://sv-hagenbuechach.de/verein/events/details?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=177&cHash=84cdc000c1fabfe1e89084c4489078f5)
+15:43:20	Error: 	"Not Found" (404) at link https://sv-hagenbuechach.de/Popover requires tooltip.js (from https://sv-hagenbuechach.de/typo3conf/ext/bootstrap_package/Resources/Public/Contrib/bootstrap3/js/bootstrap.min.js?1553009876)
+15:45:58	Error: 	"Access denied" (403) at link https://sv-hagenbuechach.de/fussball/kontakt-abteilung-fussball (from https://sv-hagenbuechach.de/verein/beitraege/details?tx_news_pi1%5Baction%5D=detail&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Bnews%5D=162&cHash=0f866d503d0bd9ce7a786cf865a807a1)
+
+HTTrack Website Copier/3.50-5 mirror complete in 17 minutes 47 seconds : 1843 links scanned, 1824 files written (381596006 bytes overall) [376602782 bytes received at 352954 bytes/sec], 7801894 bytes transferred using HTTP compression in 254 files, ratio 25%, 71.3 requests per connection
+(18 errors, 0 warnings, 0 messages)

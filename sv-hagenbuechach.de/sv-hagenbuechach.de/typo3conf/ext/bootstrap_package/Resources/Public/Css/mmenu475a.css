@@ -1,0 +1,252 @@
+
+
+/*NAVIGATION main NAV*/
+
+#mainMenuBox .toggle,
+[id^=drop] {
+    display: none;
+}
+
+#mainMenuBox nav .level6 a,
+#mainMenuBox nav .level2 a,
+#mainMenuBox nav .level3 a,
+#mainMenuBox nav .level4 a,
+#mainMenuBox nav .level5 a{
+background-color: #f5f5f5;
+opacity: 1;
+    color: #777;
+}
+#mainMenuBox nav .level6 ,
+#mainMenuBox nav .level2 ,
+#mainMenuBox nav .level3 ,
+#mainMenuBox nav .level4 ,
+#mainMenuBox nav .level5  {
+    border-bottom: solid 1px #eee;
+}
+
+/* Since we'll have the "ul li" "float:left"
+we need to add a clear after the container. */
+
+#mainMenuBox nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Removing padding, margin and "list-style" from the "ul",
+ * and adding "position:reltive" */
+
+#mainMenuBox nav ul {
+    float: right;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+}
+
+/* Positioning the navigation items inline, no inline float left instead*/
+
+#mainMenuBox nav ul li {
+    margin: 0px;
+    float: left;
+
+}
+
+/* Styling the links */
+
+#mainMenuBox nav a {
+    display: block;
+    padding: 12px 20px;
+    /*padding top corresponds to font-size*/
+    /*font-size: 17px;*/
+    text-decoration: none;
+}
+
+/*from second level onwards background color*/
+#mainMenuBox nav ul li ul li {
+    background-color:rgba(240,240,240,0.6);
+}
+
+/*level 2 when hover over level 3*/
+#mainMenuBox nav ul li ul li:hover {
+    background: #a8b7c7;
+}
+
+/* Background color change on hover same as mobile nav!*/
+#mainMenuBox nav a:hover {
+    background-color: #041959;
+    color:#fff;
+}
+
+/* Hide dropdowns by default
+ * and giving it a position of absolute */
+
+#mainMenuBox nav ul ul {
+    display: none;
+    position: absolute;
+    /* has to be the same number as the "line-height" of "nav a" */
+    top: 49px;
+}
+
+/*level 2 drop down*/
+
+#mainMenuBox nav ul li:hover>ul {
+    display: inherit;
+}
+
+/*first row drop down*/
+
+#mainMenuBox nav ul ul li {
+    float: none;
+    display: list-item;
+    position: relative;
+    min-width: 190px;
+}
+
+/* second and other rows to the left
+*  by the amount of the first row
+*  left: - minus for menu items at the right border
+*
+*  avoid a second level for the very last item if your
+*  menu floats right to the border of the screen
+*  and the second level has a longer name then the first
+*/
+#mainMenuBox nav ul ul ul li {
+    position: relative;
+    top: -49px;
+    /* same number as width nav ul ul li */
+    left: 190px;
+}
+
+#mainMenuBox nav ul li:nth-child(7) ul ul li {
+    left: -190px;
+}
+
+
+/* change '+' in order to change the dropdown symbol*/
+
+#mainMenuBox li>a:after {
+    content: '\25bc';
+    font-size: 12px;
+}
+
+#mainMenuBox li>a:only-child:after {
+    content: '';
+}
+
+/*======= 760========= MEDIA QUERIES MAX WIDTH !!! only for Menu ======== Rand 16 = 728 ===*/
+
+@media all and (max-width: 760px) {
+    #mainMenuBox {
+        position: static;
+        /*back to normal for "absolute" telefon, mail back to Header*/
+    }
+
+    /* zazu: plus sign is now from label*/
+    #mainMenuBox li>a:after {
+        content: '';
+    }
+    /*hide the nav menu, not the LINK!*/
+    /*.toggle+a,*/
+
+    /* Styling the toggle label
+    * zazu:
+    * label is no page link! only for drop down
+    * floats right and with neg. margin down
+    */
+    #mainMenuBox .toggle {
+        display: block;
+        /*padding: 15px 20px 10px 20px;*/
+        text-decoration: none;
+        border: none;
+        margin-bottom: -40px;
+        width: 20%;
+        float: right;
+        cursor: pointer;
+    }
+    #mainMenuBox .toggle:hover {
+        color: #5c2466;
+    }
+    #mainMenuBox .toggle:after {
+        content: '+';
+        font-size: 1.5em;
+        color: #5c2466;
+    }
+    #mainMenuBox [id^=drop]:checked+.toggle:after {
+        content: '–';
+        color: #5c2466;
+    }
+    /*second level, different style*/
+    #mainMenuBox nav ul li ul li .toggle {
+        padding: 15px 20px 10px 20px;
+    }
+    /* Display Dropdown when clicked on Parent Label*/
+    #hamburger:checked+label+ul,
+    #mainMenuBox [id^=drop]:checked+label+a+ul {
+        display: block;
+    }
+    /* Change menu item's width to 100% */
+    #mainMenuBox nav ul li {
+        display: block;
+        width: 100%;
+    }
+    #mainMenuBox nav ul ul .toggle,
+    #mainMenuBox nav ul ul a {
+        padding: 0 40px;
+    }
+    #mainMenuBox nav ul ul ul a {
+        padding: 0 80px;
+    }
+    #mainMenuBox nav a:hover {
+        background-color: #7fcce0;
+        border: none;
+    }
+    #mainMenuBox nav ul ul a,
+    #mainMenuBox nav ul ul ul a {
+        padding: 14px 20px;
+        font-size: 17px;
+    }
+    /*second level color*/
+    #mainMenuBox nav ul ul a {
+        background-color: #eee;
+    }
+    /*third level color*/
+    #mainMenuBox nav ul ul ul a {
+        background-color: #ccc;
+    }
+    /* Hide Dropdowns by Default second level*/
+    #mainMenuBox nav ul ul {
+        float: none;
+        position: static;
+    }
+    /* Hide menus on hover */
+    #mainMenuBox nav ul ul li:hover>ul,
+    #mainMenuBox nav ul li:hover>ul {
+        display: none;
+    }
+    /* fisrt level Dropdown */
+    #mainMenuBox nav ul ul li {
+        display: block;
+        width: 100%;
+    }
+    #mainMenuBox nav ul ul ul li {
+        position: static;
+        /* has to be the same number as the "width" of "nav ul ul li" */
+    }
+    #mainMenu #mainMenu {
+        margin:0;
+    }
+    #mainMenuBox nav a {
+        padding-right: 0;
+        padding-left: 0;
+
+    }
+}
+
+@media all and (max-width: 330px) {
+    #mainMenuBox nav ul li {
+        display: block;
+        width: 94%;
+    }
+}
+
