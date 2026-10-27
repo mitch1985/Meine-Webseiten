@@ -1,0 +1,92 @@
+---
+layout: layouts/base.njk
+title: Startseite
+---
+<section class="hero" aria-labelledby="welcome-heading">
+  {% if archive.homeImage %}
+    <img class="hero-image" src="{{ archive.homeImage | url }}" alt="" fetchpriority="high">
+  {% endif %}
+  <div class="hero-content">
+    <p class="eyebrow">Sport · Gemeinschaft · Hagenbüchach</p>
+    <h1 id="welcome-heading">{{ site.name | escape }}</h1>
+    <p class="hero-copy">{{ site.description | escape }}</p>
+    <a class="button" href="{{ '/sport/' | url }}">Sportangebote entdecken</a>
+  </div>
+</section>
+
+<section class="content-section home-introduction" aria-labelledby="introduction-heading">
+  <h2 id="introduction-heading">Hallo liebe Sportfreunde,</h2>
+  <p>herzlich willkommen beim SV Hagenbüchach!</p>
+  <p>Auf unserer Website findet ihr alle Infos zum Sportangebot, aktuelle News/Events und vieles mehr.</p>
+  <p>Schaut gerne bei uns auf dem Gelände vorbei und kommt jederzeit gerne digital, telefonisch oder vor Ort auf die jeweiligen Ansprechpartner zu.</p>
+  <p>Folgt uns auch auf den weiteren Kanälen, damit ihr alle Neuigkeiten vom SVH erfahrt!</p>
+  <ul class="social-links">
+    <li>Facebook: SV Hagenbüchach 1979</li>
+    <li>Instagram: svhagenbuechach</li>
+    <li><strong>Neu!!</strong> <a href="https://whatsapp.com/channel/0029VaMjm4tHwXb3hTy5Q21T" target="_blank" rel="noopener noreferrer">WhatsApp-Kanal</a></li>
+  </ul>
+</section>
+
+<div class="home-primary">
+    <section class="content-section" aria-labelledby="news-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Aus dem Verein</p>
+          <h2 id="news-heading">Neuigkeiten</h2>
+        </div>
+        <a href="{{ '/verein/nachrichten/' | url }}">Alle Beiträge</a>
+      </div>
+      <div class="archive-grid">
+        {% for item in archive.recentNews %}
+          <article class="archive-card">
+            {% if item.image %}<img src="{{ item.image | url }}" alt="" loading="lazy">{% endif %}
+            <div class="archive-card-body">
+              <h3><a href="{{ item.route | url }}">{{ item.title | escape }}</a></h3>
+              {% if item.date %}<p class="archive-date"><time datetime="{{ item.date | escape }}">{{ item.date | escape }}</time></p>{% endif %}
+              <p>{{ item.summary | escape }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+    <section class="content-section" aria-labelledby="events-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Gemeinsam erleben</p>
+          <h2 id="events-heading">Veranstaltungen</h2>
+        </div>
+        <a href="{{ '/verein/veranstaltungen/' | url }}">Alle Veranstaltungen</a>
+      </div>
+      <div class="archive-grid">
+        {% for item in archive.recentEvents %}
+          <article class="archive-card">
+            {% if item.image %}<img src="{{ item.image | url }}" alt="" loading="lazy">{% endif %}
+            <div class="archive-card-body">
+              <h3><a href="{{ item.route | url }}">{{ item.title | escape }}</a></h3>
+              {% if item.date %}<p class="archive-date"><time datetime="{{ item.date | escape }}">{{ item.date | escape }}</time></p>{% endif %}
+              <p>{{ item.summary | escape }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+  <section class="content-section sponsor-section" aria-labelledby="sponsors-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Vielen Dank für die Unterstützung</p>
+        <h2 id="sponsors-heading">Unsere Sponsoren</h2>
+      </div>
+      <a href="{{ '/verein/sponsoren/' | url }}">Alle Sponsoren</a>
+    </div>
+    <ul class="sponsor-grid">
+      {% for sponsor in archive.sponsors %}
+        <li>
+          <a class="sponsor-card" href="{{ sponsor.href }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ sponsor.image | url }}" alt="{{ sponsor.name | escape }}" loading="lazy">
+            <span>{{ sponsor.name | escape }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,128 @@
+const fs = require("node:fs");
+const path = require("node:path");
+const { parse } = require("parse5");
+
+const root = path.resolve(__dirname, "..");
+const output = path.join(root, "dist");
+const archive = require(path.join(root, "site", "_data", "archive.json"));
+const htmlFiles = [];
+const problems = [];
+let emptyAltImages = 0;
+
+function walk(directory) {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const filePath = path.join(directory, entry.name);
+    if (entry.isDirectory()) walk(filePath);
+    else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) htmlFiles.push(filePath);
+  }
+}
+
+function textContent(node) {
+  if (node.nodeName === "#text") return node.value;
+  return (node.childNodes ?? []).map(textContent).join("");
+}
+
+function visit(node, callback) {
+  if (node.tagName) callback(node);
+  for (const child of node.childNodes ?? []) visit(child, callback);
+}
+
+function localTarget(value, fromFile) {
+  if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|data:)/i.test(value)) return null;
+
+  let pathname;
+  try {
+    const relativePage = path.relative(output, fromFile).split(path.sep).join("/");
+    pathname = decodeURIComponent(new URL(value, `https://local.test/${relativePage}`).pathname);
+  } catch {
+    problems.push(`Invalid local URL: ${value}`);
+    return null;
+  }
+
+  const target = path.resolve(output, `.${pathname}`);
+  if (target !== output && !target.startsWith(`${output}${path.sep}`)) {
+    problems.push(`Path escapes the generated output: ${value}`);
+    return null;
+  }
+  if (fs.existsSync(target) && fs.statSync(target).isFile()) return target;
+  if (fs.existsSync(path.join(target, "index.html"))) return path.join(target, "index.html");
+  if (!path.extname(target) && fs.existsSync(`${target}.html`)) return `${target}.html`;
+  return target;
+}
+
+if (!fs.existsSync(output)) throw new Error("Generated site not found. Run npm run build first.");
+walk(output);
+
+if (archive.news.length < 50 || archive.events.length < 50) {
+  problems.push(`Imported too few articles: ${archive.news.length} news and ${archive.events.length} events.`);
+}
+
+for (const page of archive.pages) {
+  if (!fs.existsSync(path.join(output, page.outputPath))) {
+    problems.push(`Missing imported page: ${page.outputPath}`);
+  }
+}
+
+for (const filePath of htmlFiles) {
+  const document = parse(fs.readFileSync(filePath, "utf8"));
+  const ids = new Set();
+  const references = [];
+  const headings = [];
+  let title = "";
+  const relativePath = path.relative(output, filePath);
+
+  visit(document, (node) => {
+    if (node.tagName === "title") title = textContent(node).trim();
+    if (node.tagName === "h1") headings.push(node);
+    if (node.tagName === "img") {
+      const alt = node.attrs?.find((attribute) => attribute.name === "alt");
+      if (!alt) problems.push(`Image is missing an alt attribute in ${relativePath}`);
+      else if (!alt.value.trim()) emptyAltImages += 1;
+    }
+
+    for (const attribute of node.attrs ?? []) {
+      if (attribute.name === "id") ids.add(attribute.value);
+      if (attribute.name === "href" && attribute.value.startsWith("#")) {
+        references.push({ type: "fragment", value: attribute.value.slice(1) });
+      }
+      if (["href", "src", "poster"].includes(attribute.name) && !attribute.value.startsWith("#")) {
+        references.push({ type: "url", value: attribute.value, tag: node.tagName });
+      }
+    }
+  });
+
+  if (!title) problems.push(`Missing document title: ${relativePath}`);
+  if (headings.length !== 1) problems.push(`Expected one h1 in ${relativePath}, found ${headings.length}.`);
+  if (!fs.readFileSync(filePath, "utf8").includes("© 2026")) {
+    problems.push(`Missing current club copyright in ${relativePath}`);
+  }
+
+  for (const reference of references) {
+    if (reference.type === "fragment") {
+      if (reference.value && !ids.has(reference.value)) {
+        problems.push(`Broken fragment #${reference.value} in ${relativePath}`);
+      }
+      continue;
+    }
+
+    const target = localTarget(reference.value, filePath);
+    if (target && !fs.existsSync(target)) {
+      problems.push(`Broken local ${reference.tag} URL ${reference.value} in ${relativePath}`);
+    }
+  }
+}
+
+if (problems.length) {
+  console.error(`Generated-site checks failed with ${problems.length} issue(s):`);
+  for (const problem of problems.slice(0, 40)) console.error(`- ${problem}`);
+  if (problems.length > 40) console.error(`- ...and ${problems.length - 40} more.`);
+  process.exitCode = 1;
+} else {
+  console.log(
+    `Validated ${htmlFiles.length} HTML files, ${archive.news.length} news, ` +
+    `${archive.events.length} events and ${archive.pages.length - archive.articles.length} other pages.`
+  );
+  if (emptyAltImages) {
+    console.warn(`${emptyAltImages} images have empty alt text; review whether any need descriptive alternatives.`);
+  }
+}

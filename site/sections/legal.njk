@@ -1,0 +1,14 @@
+---
+layout: layouts/base.njk
+title: Rechtliches
+permalink: rechtliches/index.html
+---
+<section class="content-section" aria-labelledby="legal-heading">
+  <p class="eyebrow">Informationen</p>
+  <h1 id="legal-heading">Rechtliches</h1>
+  <div class="link-grid">
+    {% for item in archive.sections.rechtliches %}
+      <a class="link-card" href="{{ item.route | url }}">{{ item.title | escape }}<span aria-hidden="true"> →</span></a>
+    {% endfor %}
+  </div>
+</section>

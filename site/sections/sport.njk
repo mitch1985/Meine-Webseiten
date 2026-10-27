@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+title: Sportangebote
+permalink: sport/index.html
+---
+<section class="content-section" aria-labelledby="sports-heading">
+  <p class="eyebrow">In Bewegung</p>
+  <h1 id="sports-heading">Sportangebote</h1>
+  <p>Finde Informationen zu den Sportabteilungen und Bewegungsangeboten des Vereins.</p>
+  <div class="link-grid">
+    {% for item in archive.sections.sport %}
+      <a class="link-card" href="{{ item.route | url }}">{{ item.title | escape }}<span aria-hidden="true"> →</span></a>
+    {% endfor %}
+  </div>
+</section>

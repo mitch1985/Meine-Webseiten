@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Start",
+    "href": "/"
+  },
+  {
+    "label": "Sportangebote",
+    "href": "/sport/"
+  },
+  {
+    "label": "Vereinsleben",
+    "href": "/verein/"
+  },
+  {
+    "label": "Nachrichten",
+    "href": "/verein/nachrichten/"
+  },
+  {
+    "label": "Termine",
+    "href": "/verein/veranstaltungen/"
+  }
+]

@@ -1,0 +1,5 @@
+node_modules/
+_site/
+dist/
+site/_data/archive.json
+site/assets/archive/

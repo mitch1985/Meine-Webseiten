@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+title: Vereinsleben
+permalink: verein/index.html
+---
+<section class="content-section" aria-labelledby="club-heading">
+  <p class="eyebrow">Unser Verein</p>
+  <h1 id="club-heading">Vereinsleben</h1>
+  <p>Informationen, Ansprechpartner und Angebote des Sportvereins Hagenbüchach.</p>
+  <div class="link-grid">
+    {% for item in archive.sections.verein %}
+      <a class="link-card" href="{{ item.route | url }}">{{ item.title | escape }}<span aria-hidden="true"> →</span></a>
+    {% endfor %}
+    <a class="link-card" href="{{ '/verein/nachrichten/' | url }}">Nachrichten und Beiträge<span aria-hidden="true"> →</span></a>
+    <a class="link-card" href="{{ '/verein/veranstaltungen/' | url }}">Veranstaltungen und Termine<span aria-hidden="true"> →</span></a>
+  </div>
+</section>

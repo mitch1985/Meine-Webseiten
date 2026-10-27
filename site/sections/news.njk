@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: Nachrichten und Beiträge
+permalink: verein/nachrichten/index.html
+---
+<section class="content-section" aria-labelledby="news-heading">
+  <p class="eyebrow">Aus dem Verein</p>
+  <h1 id="news-heading">Nachrichten und Beiträge</h1>
+  <p>Berichte und Neuigkeiten aus dem Vereinsleben.</p>
+  <div class="archive-grid">
+    {% for item in archive.news %}
+      <article class="archive-card">
+        {% if item.image %}
+          <a href="{{ item.route | url }}" tabindex="-1" aria-hidden="true">
+            <img src="{{ item.image | url }}" alt="" loading="lazy">
+          </a>
+        {% endif %}
+        <div class="archive-card-body">
+          <h2><a href="{{ item.route | url }}">{{ item.title | escape }}</a></h2>
+          {% if item.date %}<p class="archive-date"><time datetime="{{ item.date | escape }}">{{ item.date | escape }}</time></p>{% endif %}
+          <p>{{ item.summary | escape }}</p>
+          <a class="archive-card-link" href="{{ item.route | url }}">Beitrag lesen</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>

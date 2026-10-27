@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de" data-theme="{{ site.defaultTheme }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ (description or site.description) | escape }}">
+    <meta name="theme-color" content="#174d35">
+    <title>{{ (pageTitle or title) | escape }} | {{ site.name | escape }}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/site.css' | url }}">
+    <script src="{{ '/assets/js/theme.js' | url }}" defer></script>
+  </head>
+  <body class="{% if page.url == '/' %}home-page{% endif %}">
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+    <header class="site-header" id="start">
+      <div class="site-header-top">
+        <a class="site-brand" href="{{ '/' | url }}">
+          <img src="{{ '/assets/archive/fileadmin/media/icons/icon-192x192.png' | url }}" alt="">
+          <span>{{ site.name }}</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">
+          <span class="menu-icon" aria-hidden="true"></span><span>Menü</span>
+        </button>
+      </div>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Hauptnavigation">
+        <ul class="primary-nav-list">
+          <li>
+            <details class="nav-dropdown">
+              <summary>Verein</summary>
+              <ul>
+                <li><a href="{{ '/verein/' | url }}">Vereinsleben – Übersicht</a></li>
+                {% for item in archive.sections.verein %}
+                  <li><a href="{{ item.route | url }}">{{ item.title | escape }}</a></li>
+                {% endfor %}
+                <li><a href="{{ '/verein/nachrichten/' | url }}">Nachrichten</a></li>
+                <li><a href="{{ '/verein/veranstaltungen/' | url }}">Veranstaltungen und Termine</a></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details class="nav-dropdown">
+              <summary>Fußball</summary>
+              <ul>
+                <li><a href="{{ '/sport/' | url }}">Sportangebote – Übersicht</a></li>
+                {% for item in archive.sections.sport %}
+                  {% if '/sport/fussball/' in item.route %}
+                    <li><a href="{{ item.route | url }}">{{ item.title | escape }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details class="nav-dropdown">
+              <summary>Tischtennis</summary>
+              <ul>
+                <li><a href="{{ '/sport/' | url }}">Sportangebote – Übersicht</a></li>
+                {% for item in archive.sections.sport %}
+                  {% if item.route == '/sport/tischtennis/herren/' %}
+                    <li><a href="{{ item.route | url }}">Herren 1</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% for item in archive.sections.sport %}
+                  {% if item.route == '/sport/tischtennis/herren-2/' %}
+                    <li><a href="{{ item.route | url }}">Herren 2</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% for item in archive.sections.sport %}
+                  {% if item.route == '/sport/tischtennis/herren-3/' %}
+                    <li><a href="{{ item.route | url }}">Herren 3</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% for item in archive.sections.sport %}
+                  {% if item.route == '/sport/tischtennis/herren-4/' %}
+                    <li><a href="{{ item.route | url }}">Herren 4</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% for item in archive.sections.sport %}
+                  {% if '/sport/tischtennis/' in item.route and '/herren' not in item.route %}
+                    <li><a href="{{ item.route | url }}">{{ item.title | escape }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </details>
+          </li>
+          {% for item in archive.sections.sport %}
+            {% if '/sport/fussball/' not in item.route and '/sport/tischtennis/' not in item.route and '/sport/volleyball/' not in item.route %}
+              <li><a class="primary-nav-link" href="{{ item.route | url }}">{{ item.title | escape }}</a></li>
+            {% endif %}
+          {% endfor %}
+          <li><a class="primary-nav-link" href="{{ '/sport/volleyball/' | url }}">Volleyball</a></li>
+        </ul>
+        <label class="theme-control" for="theme-select">
+          <span>Design</span>
+          <select id="theme-select" name="theme">
+            <option value="club">Verein</option>
+            <option value="halloween">Halloween</option>
+          </select>
+        </label>
+      </nav>
+    </header>
+    <main id="main">
+      {{ content | safe }}
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <section aria-labelledby="footer-quick-links">
+            <h2 id="footer-quick-links">Quick Links</h2>
+            <ul>
+              <li><a href="https://www.metzgerei-bauernladen-jacob.de/" target="_blank" rel="noopener noreferrer">Metzgerei Jacob</a></li>
+              <li><a href="https://www.hauth-galabau.de/" target="_blank" rel="noopener noreferrer">Hauth Garten- und Landschaftsbau e.K.</a></li>
+              <li><a href="https://www.huissmann.de/startseite.html" target="_blank" rel="noopener noreferrer">Versicherungsmakler Huissmann GmbH</a></li>
+              <li><a href="https://www.bfv.de/" target="_blank" rel="noopener noreferrer">Bayerischer Fußball-Verband</a></li>
+              <li><a href="https://www.bttv.de/" target="_blank" rel="noopener noreferrer">Bayerischer Tischtennis-Verband</a></li>
+              <li><a href="https://www.guenthers-sport-shop.de/" target="_blank" rel="noopener noreferrer">Günther's Sport Shop</a></li>
+              <li><a href="https://www.hagenbuechach.de/" target="_blank" rel="noopener noreferrer">Gemeinde Hagenbüchach</a></li>
+              <li><a href="http://freizeitpartner-feder.de/" target="_blank" rel="noopener noreferrer">Freizeitpartner Feder</a></li>
+              <li><a href="https://www.hudson-gmbh.de/" target="_blank" rel="noopener noreferrer">Hudson GmbH</a></li>
+              <li><a href="https://www.breitsamer.de/" target="_blank" rel="noopener noreferrer">Breitsamer + Ulrich GmbH &amp; Co. KG</a></li>
+            </ul>
+          </section>
+          <section aria-labelledby="footer-club-links">
+            <h2 id="footer-club-links">Sportverein</h2>
+            <ul>
+              <li><a href="{{ '/verein/historie/' | url }}">Historie</a></li>
+              <li><a href="{{ '/rechtliches/vorstand/' | url }}">Vorstand</a></li>
+              <li><a href="{{ '/verein/mitglied-werden/' | url }}">Mitgliedschaft</a></li>
+              <li><a href="{{ '/verein/kontakt-1/' | url }}">Kontakt &amp; Anfahrt</a></li>
+            </ul>
+          </section>
+          <section aria-labelledby="footer-legal-links">
+            <h2 id="footer-legal-links">Rechtliches</h2>
+            <ul>
+              {% for item in archive.sections.rechtliches %}
+                <li><a href="{{ item.route | url }}">{{ item.title | escape }}</a></li>
+              {% endfor %}
+            </ul>
+          </section>
+        </div>
+        <div class="footer-bottom">
+          <p>{{ site.name }} · © 2026</p>
+          <a href="#start">Nach oben</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

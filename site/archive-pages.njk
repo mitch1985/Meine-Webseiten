@@ -1,0 +1,22 @@
+---
+pagination:
+  data: archive.pages
+  size: 1
+  alias: archivePage
+layout: layouts/base.njk
+permalink: "{{ archivePage.outputPath }}"
+eleventyComputed:
+  pageTitle: "{{ archivePage.title }}"
+---
+<article class="archive-content" aria-labelledby="archive-page-title">
+  {% if not archivePage.hasHeading %}
+    <header class="content-section">
+      <p class="eyebrow">{{ archivePage.section | escape }}</p>
+      <h1 id="archive-page-title">{{ archivePage.title | escape }}</h1>
+      {% if archivePage.date %}
+        <p><time datetime="{{ archivePage.date | escape }}">{{ archivePage.date | escape }}</time></p>
+      {% endif %}
+    </header>
+  {% endif %}
+  {{ archivePage.content | safe }}
+</article>

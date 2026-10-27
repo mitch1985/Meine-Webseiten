@@ -1,0 +1,14 @@
+{
+  "name": "sv-hagenbuechach-static",
+  "private": true,
+  "scripts": {
+    "prepare:archive": "node scripts/prepare-archive.js",
+    "build": "npm run prepare:archive && eleventy",
+    "serve": "npm run prepare:archive && eleventy --serve",
+    "test": "npm run build && node scripts/check-generated-site.js"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "parse5": "^7.3.0"
+  }
+}
