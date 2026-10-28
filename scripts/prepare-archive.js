@@ -69,6 +69,11 @@ function removeAttribute(node, name) {
   if (node.attrs) node.attrs = node.attrs.filter((attribute) => attribute.name !== name);
 }
 
+function hasClass(node, className) {
+  if (!node) return false;
+  return (getAttribute(node, "class") || "").split(/\s+/).includes(className);
+}
+
 function textContent(node) {
   if (node.nodeName === "#text") return node.value;
   return (node.childNodes ?? []).map(textContent).join("");
@@ -312,6 +317,206 @@ function updateTableTennisTraining(page) {
     throw new Error(`Expected one table tennis training section, found ${replacementCount}.`);
   }
   page.content = fragment.childNodes.map(serialize).join("");
+}
+
+function removeEmptyContent(parent) {
+  const children = parent.childNodes ?? [];
+  parent.childNodes = children.filter((node) => {
+    const text = textContent(node).replace(/[\s\u00a0]+/g, "").trim();
+    if (/^h[1-6]$/.test(node.tagName || "") && !text) return false;
+    if (/^h[1-6]$/.test(node.tagName || "")) {
+      const links = findElements(node, (candidate) =>
+        candidate.tagName === "a" && hasClass(candidate, "link-file")
+      );
+      if (links.length === 1 && textContent(node).trim()) {
+        node.tagName = "p";
+        node.nodeName = "p";
+        node.attrs ??= [];
+        const classAttribute = node.attrs.find((attribute) => attribute.name === "class");
+        if (classAttribute) classAttribute.value = `${classAttribute.value} document-link`.trim();
+        else node.attrs.push({ name: "class", value: "document-link" });
+      }
+    }
+    if (node.tagName === "p" && !text && !(node.childNodes ?? []).some((child) =>
+      ["img", "video", "audio", "iframe", "object", "embed"].includes(child.tagName)
+    )) return false;
+    removeEmptyContent(node);
+    return true;
+  });
+  for (const child of parent.childNodes) child.parentNode = parent;
+}
+
+function cleanClubContactPage(page) {
+  const fragment = parseFragment(page.content);
+  let addressCount = 0;
+
+  function updateAddress(parent) {
+    for (const node of parent.childNodes ?? []) {
+      if (node.tagName === "p" && hasClass(node, "address-address")) {
+        const addressText = textContent(node);
+        if (/Schulstrasse\s+9\s+bzw\.\s*11/i.test(addressText)) {
+          const replacement = parseFragment("Schulstraße 9<br>91469 Hagenbüchach");
+          node.childNodes = replacement.childNodes;
+          for (const child of node.childNodes) child.parentNode = node;
+          addressCount += 1;
+        }
+      }
+      updateAddress(node);
+    }
+  }
+
+  updateAddress(fragment);
+  if (addressCount !== 1) {
+    throw new Error(`Expected one legacy club address to normalize, found ${addressCount}.`);
+  }
+  page.content = fragment.childNodes.map(serialize).join("");
+}
+
+function updateEquipmentPage(page) {
+  const fragment = parseFragment(page.content);
+  const partnerName = "Günther's Sport-Shop Nürnberg";
+  const logoPath = "/assets/archive/fileadmin/_processed_/3/5/csm_logoguenthers_ef691f1468.png";
+  let galleryCount = 0;
+  let headingCount = 0;
+  let linkedNameCount = 0;
+  let introCount = 0;
+
+  function removeDuplicateGallery(parent) {
+    const children = parent.childNodes ?? [];
+    parent.childNodes = children.filter((node) => {
+      if (node.tagName === "div" && hasClass(node, "textpic-item")
+        && hasClass(node, "textpic-gallery")) {
+        galleryCount += 1;
+        return false;
+      }
+      removeDuplicateGallery(node);
+      return true;
+    });
+    for (const child of parent.childNodes) child.parentNode = parent;
+  }
+
+  function linkPartnerName(node) {
+    if (node.nodeName === "#text" && node.value.includes(partnerName)) {
+      const parent = node.parentNode;
+      const index = parent.childNodes.indexOf(node);
+      const before = node.value.slice(0, node.value.indexOf(partnerName));
+      const after = node.value.slice(node.value.indexOf(partnerName) + partnerName.length);
+      const replacement = [];
+      if (before) replacement.push({ nodeName: "#text", value: before, parentNode: parent });
+      const anchor = parseFragment(
+        `<a href="https://www.guenthers-sport-shop.de/">${partnerName}</a>`
+      ).childNodes[0];
+      anchor.parentNode = parent;
+      replacement.push(anchor);
+      if (after) replacement.push({ nodeName: "#text", value: after, parentNode: parent });
+      parent.childNodes.splice(index, 1, ...replacement);
+      linkedNameCount += 1;
+      return true;
+    }
+
+    for (const child of node.childNodes ?? []) {
+      if (linkPartnerName(child)) return true;
+    }
+    return false;
+  }
+
+  function updateContent(node) {
+    if (node.tagName === "h4"
+      && textContent(node).replace(/\s+/g, " ").trim()
+        === "Der SV Hagenbüchach bedankt sich bei seinem Partner Günther's Sport-Shop Nürnberg") {
+      node.tagName = "h2";
+      node.nodeName = "h2";
+      node.childNodes = parseFragment("Unser Ausrüstungspartner").childNodes;
+      for (const child of node.childNodes) child.parentNode = node;
+      headingCount += 1;
+    }
+    if (node.tagName === "p" && textContent(node).includes("Seit Januar 2020")) {
+      linkPartnerName(node);
+      const parent = node.parentNode;
+      const index = parent.childNodes.indexOf(node);
+      const wrapper = parseFragment(
+        `<div class="equipment-partner-intro"><a class="equipment-partner-logo" ` +
+        `href="https://www.guenthers-sport-shop.de/"><img src="${logoPath}" ` +
+        `alt="Günther's Sport-Shop Nürnberg" loading="lazy" decoding="async"></a></div>`
+      ).childNodes[0];
+      wrapper.parentNode = parent;
+      node.parentNode = wrapper;
+      wrapper.childNodes.push(node);
+      parent.childNodes.splice(index, 1, wrapper);
+      introCount += 1;
+    }
+    for (const child of [...(node.childNodes ?? [])]) updateContent(child);
+  }
+
+  removeDuplicateGallery(fragment);
+  updateContent(fragment);
+  if (galleryCount !== 1 || headingCount !== 1 || linkedNameCount !== 1 || introCount !== 1) {
+    throw new Error(
+      `Could not normalize equipment page: ${galleryCount} galleries, ${headingCount} headings, ` +
+      `${linkedNameCount} partner links, ${introCount} intro blocks found.`
+    );
+  }
+  page.content = fragment.childNodes.map(serialize).join("");
+}
+
+function addAddressMaps(pages) {
+  for (const page of pages) {
+    const fragment = parseFragment(page.content);
+
+    function addressTextContent(node) {
+      if (node.tagName === "br") return ", ";
+      if (node.nodeName === "#text") return node.value;
+      return (node.childNodes ?? []).map(addressTextContent).join("");
+    }
+
+    function visit(parent) {
+      const children = parent.childNodes ?? [];
+      for (let index = 0; index < children.length; index += 1) {
+        const node = children[index];
+        if (node.tagName === "address") {
+          const address = findElements(node, (candidate) =>
+            candidate.tagName === "p" && hasClass(candidate, "address-address")
+          )[0];
+          const addressText = address && addressTextContent(address)
+            .replace(/\s+/g, " ")
+            .replace(/\s*,\s*/g, ", ")
+            .trim();
+
+          if (addressText) {
+            const query = encodeURIComponent(addressText);
+            const hasMapsLink = findElements(node, (candidate) =>
+              candidate.tagName === "a" && getAttribute(candidate, "href")?.includes("google.com/maps")
+            ).length > 0;
+            if (!hasMapsLink) {
+              const link = parseFragment(
+                `<p class="address-map-link"><a href="https://www.google.com/maps/search/?api=1&amp;query=${query}" ` +
+                'target="_blank" rel="noopener noreferrer">Adresse in Google Maps öffnen</a></p>'
+              );
+              for (const child of link.childNodes) child.parentNode = node;
+              node.childNodes.push(...link.childNodes);
+            }
+
+            const nextElement = children.slice(index + 1).find((child) => child.tagName);
+            if (!nextElement || !hasClass(nextElement, "map-embed")) {
+              const map = parseFragment(
+                `<div class="map-embed"><iframe src="https://www.google.com/maps?q=${query}&amp;output=embed" ` +
+                'title="Karte zur Adresse" loading="lazy" ' +
+                'referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>'
+              );
+              for (const child of map.childNodes) child.parentNode = parent;
+              children.splice(index + 1, 0, ...map.childNodes);
+              index += map.childNodes.length;
+            }
+          }
+        }
+
+        visit(node);
+      }
+    }
+
+    visit(fragment);
+    page.content = fragment.childNodes.map(serialize).join("");
+  }
 }
 
 function updateTableTennisRosters(pages) {
@@ -730,6 +935,18 @@ function main() {
   }
   updateTableTennisTraining(tableTennisContact);
   updateTableTennisRosters(pages);
+  const clubContact = pages.find((page) => page.source === "verein/kontakt-1.html");
+  if (!clubContact) throw new Error("Could not find the club contact and directions page.");
+  cleanClubContactPage(clubContact);
+  const equipmentPage = pages.find((page) => page.source === "verein/ausruestung.html");
+  if (!equipmentPage) throw new Error("Could not find the club equipment page.");
+  updateEquipmentPage(equipmentPage);
+  for (const page of pages) {
+    const fragment = parseFragment(page.content);
+    removeEmptyContent(fragment);
+    page.content = fragment.childNodes.map(serialize).join("");
+  }
+  addAddressMaps(pages);
 
   const importedPages = pages;
   const articles = importedPages.filter((page) => page.kind === "news" || page.kind === "event");

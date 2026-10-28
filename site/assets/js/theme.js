@@ -1,22 +1,46 @@
 const themeSelect = document.querySelector("#theme-select");
-const availableThemes = new Set(["club", "halloween"]);
+const themeColors = new Map([
+  ["club", "#e7f2e9"],
+  ["halloween", "#eee5f2"],
+  ["autumn", "#f3e5d6"],
+  ["floodlight", "#e5eef5"]
+]);
 const savedTheme = window.localStorage.getItem("svh-theme");
-const initialTheme = availableThemes.has(savedTheme) ? savedTheme : "club";
+const initialTheme = themeColors.has(savedTheme) ? savedTheme : "club";
 const menuToggle = document.querySelector(".menu-toggle");
 const siteHeader = document.querySelector(".site-header");
+const navDropdowns = siteHeader.querySelectorAll(".nav-dropdown");
+const themeColor = document.querySelector('meta[name="theme-color"]');
 
-document.documentElement.dataset.theme = initialTheme;
-themeSelect.value = initialTheme;
-
-themeSelect.addEventListener("change", () => {
-  const selectedTheme = themeSelect.value;
-
-  if (!availableThemes.has(selectedTheme)) {
-    throw new RangeError(`Unbekanntes Design: ${selectedTheme}`);
+function applyTheme(theme) {
+  if (!themeColors.has(theme)) {
+    throw new RangeError(`Unbekanntes Design: ${theme}`);
   }
 
-  document.documentElement.dataset.theme = selectedTheme;
-  window.localStorage.setItem("svh-theme", selectedTheme);
+  document.documentElement.dataset.theme = theme;
+  themeSelect.value = theme;
+  themeColor.content = themeColors.get(theme);
+  window.localStorage.setItem("svh-theme", theme);
+}
+
+applyTheme(initialTheme);
+
+navDropdowns.forEach((dropdown) => {
+  dropdown.addEventListener("toggle", () => {
+    if (!dropdown.open) {
+      return;
+    }
+
+    navDropdowns.forEach((otherDropdown) => {
+      if (otherDropdown !== dropdown) {
+        otherDropdown.open = false;
+      }
+    });
+  });
+});
+
+themeSelect.addEventListener("change", () => {
+  applyTheme(themeSelect.value);
 });
 
 menuToggle.addEventListener("click", () => {

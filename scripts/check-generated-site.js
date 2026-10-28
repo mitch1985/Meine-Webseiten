@@ -27,6 +27,21 @@ function visit(node, callback) {
   for (const child of node.childNodes ?? []) visit(child, callback);
 }
 
+function hasClass(node, className) {
+  if (!node) return false;
+  return (node.attrs?.find((attribute) => attribute.name === "class")?.value || "")
+    .split(/\s+/)
+    .includes(className);
+}
+
+function contains(node, predicate) {
+  let found = false;
+  visit(node, (candidate) => {
+    if (predicate(candidate)) found = true;
+  });
+  return found;
+}
+
 function localTarget(value, fromFile) {
   if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|data:)/i.test(value)) return null;
 
@@ -68,16 +83,29 @@ for (const filePath of htmlFiles) {
   const ids = new Set();
   const references = [];
   const headings = [];
+  const headingText = [];
+  const addresses = [];
+  let equipmentLogoCount = 0;
   let title = "";
   const relativePath = path.relative(output, filePath);
 
   visit(document, (node) => {
     if (node.tagName === "title") title = textContent(node).trim();
     if (node.tagName === "h1") headings.push(node);
+    if (/^h[1-6]$/.test(node.tagName)) {
+      const heading = textContent(node).replace(/\s+/g, " ").trim();
+      headingText.push(heading);
+      if (!heading) problems.push(`Empty heading in ${relativePath}`);
+    }
+    if (node.tagName === "address") addresses.push(node);
     if (node.tagName === "img") {
       const alt = node.attrs?.find((attribute) => attribute.name === "alt");
       if (!alt) problems.push(`Image is missing an alt attribute in ${relativePath}`);
       else if (!alt.value.trim()) emptyAltImages += 1;
+      if (node.attrs?.some((attribute) =>
+        attribute.name === "src"
+        && attribute.value.endsWith("/csm_logoguenthers_ef691f1468.png")
+      )) equipmentLogoCount += 1;
     }
 
     for (const attribute of node.attrs ?? []) {
@@ -95,6 +123,43 @@ for (const filePath of htmlFiles) {
   if (headings.length !== 1) problems.push(`Expected one h1 in ${relativePath}, found ${headings.length}.`);
   if (!fs.readFileSync(filePath, "utf8").includes("© 2026")) {
     problems.push(`Missing current club copyright in ${relativePath}`);
+  }
+
+  for (const address of addresses) {
+    if (!contains(address, (node) => node.tagName === "p" && hasClass(node, "address-address"))) continue;
+
+    const hasMapsLink = contains(address, (node) =>
+      node.tagName === "a" && node.attrs?.some(
+        (attribute) => attribute.name === "href" && attribute.value.startsWith("https://www.google.com/maps/")
+      )
+    );
+    const siblings = address.parentNode?.childNodes ?? [];
+    const addressIndex = siblings.indexOf(address);
+    const nextElement = siblings.slice(addressIndex + 1).find((node) => node.tagName);
+    const hasMapsEmbed = hasClass(nextElement, "map-embed") && contains(nextElement, (node) =>
+      node.tagName === "iframe" && node.attrs?.some(
+        (attribute) => attribute.name === "src" && attribute.value.startsWith("https://www.google.com/maps?q=")
+      )
+    );
+    if (!hasMapsLink || !hasMapsEmbed) {
+      problems.push(`Address is missing its Google Maps link or embed in ${relativePath}`);
+    }
+  }
+
+  if (relativePath === path.join("verein", "kontakt-1", "index.html")) {
+    if (headingText.some((text) => !text)) {
+      problems.push(`Contact page contains an empty heading in ${relativePath}`);
+    }
+    if (!fs.readFileSync(filePath, "utf8").includes("Schulstraße 9")) {
+      problems.push(`Contact page is missing the corrected street address in ${relativePath}`);
+    }
+    if (fs.readFileSync(filePath, "utf8").includes("bzw. 11")) {
+      problems.push(`Contact page still includes the removed alternate street number in ${relativePath}`);
+    }
+  }
+
+  if (relativePath === path.join("verein", "ausruestung", "index.html") && equipmentLogoCount !== 1) {
+    problems.push(`Expected exactly one Günther's Sport-Shop logo in ${relativePath}, found ${equipmentLogoCount}.`);
   }
 
   for (const reference of references) {

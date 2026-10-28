@@ -16,8 +16,8 @@ Generated output is written to `dist/`.
 Shared markup is in `site/_includes/layouts/`; theme colors and
 responsive/accessibility styles are in `site/assets/css/site.css`. Imported
 pages and referenced images are generated during the build and are not edited
-by hand. The theme selector demonstrates the club and Halloween themes, and
-stores the selected theme in the browser.
+by hand. The theme selector offers the club, Halloween, autumn, and floodlight
+themes, and stores the selected theme in the browser.
 
 News and event entries remain individual pages and are grouped into generated
 archive indexes. General pages are organized into sport, club, and legal

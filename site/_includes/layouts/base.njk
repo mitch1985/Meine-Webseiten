@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ (description or site.description) | escape }}">
-    <meta name="theme-color" content="#174d35">
+    <meta name="theme-color" content="#e7f2e9">
     <title>{{ (pageTitle or title) | escape }} | {{ site.name | escape }}</title>
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | url }}">
     <script src="{{ '/assets/js/theme.js' | url }}" defer></script>
@@ -94,6 +94,8 @@
           <select id="theme-select" name="theme">
             <option value="club">Verein</option>
             <option value="halloween">Halloween</option>
+            <option value="autumn">Herbst</option>
+            <option value="floodlight">Flutlicht</option>
           </select>
         </label>
       </nav>
@@ -127,6 +129,8 @@
               <li><a href="{{ '/verein/mitglied-werden/' | url }}">Mitgliedschaft</a></li>
               <li><a href="{{ '/verein/kontakt-1/' | url }}">Kontakt &amp; Anfahrt</a></li>
             </ul>
+            <h3 class="footer-social-heading">Folgt uns</h3>
+            {% include "social-links.njk" %}
           </section>
           <section aria-labelledby="footer-legal-links">
             <h2 id="footer-legal-links">Rechtliches</h2>
