@@ -366,6 +366,7 @@ function removeEmptyContent(parent) {
 function cleanClubContactPage(page) {
   const fragment = parseFragment(page.content);
   let addressCount = 0;
+  let contactCardCount = 0;
 
   function updateAddress(parent) {
     for (const node of parent.childNodes ?? []) {
@@ -385,6 +386,52 @@ function cleanClubContactPage(page) {
   updateAddress(fragment);
   if (addressCount !== 1) {
     throw new Error(`Expected one legacy club address to normalize, found ${addressCount}.`);
+  }
+
+  function wrapContactCard(parent) {
+    const children = parent.childNodes ?? [];
+    for (let index = 0; index < children.length; index += 1) {
+      if (children[index].tagName === "p" && hasClass(children[index], "address-title")) {
+        const contactFields = new Set([
+          "address-title",
+          "address-address",
+          "address-fax",
+          "address-map-link"
+        ]);
+        let end = index;
+        let hasStreetAddress = false;
+        while (end < children.length) {
+          const node = children[end];
+          if (node.nodeName === "#text" && !node.value.trim()) {
+            end += 1;
+            continue;
+          }
+          if (node.tagName !== "p" || ![...contactFields].some((className) => hasClass(node, className))) {
+            break;
+          }
+          hasStreetAddress ||= hasClass(node, "address-address");
+          end += 1;
+        }
+        if (!hasStreetAddress) {
+          throw new Error("Could not find the street address for the club contact card.");
+        }
+
+        const card = parseFragment('<address class="contact-card"></address>').childNodes[0];
+        card.childNodes = children.splice(index, end - index);
+        for (const child of card.childNodes) child.parentNode = card;
+        card.parentNode = parent;
+        children.splice(index, 0, card);
+        contactCardCount += 1;
+        return;
+      }
+      wrapContactCard(children[index]);
+      if (contactCardCount) return;
+    }
+  }
+
+  wrapContactCard(fragment);
+  if (contactCardCount !== 1) {
+    throw new Error(`Expected one club contact card, found ${contactCardCount}.`);
   }
   page.content = fragment.childNodes.map(serialize).join("");
 }

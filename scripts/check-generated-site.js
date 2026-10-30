@@ -172,6 +172,18 @@ for (const filePath of htmlFiles) {
     if (headingText.some((text) => !text)) {
       problems.push(`Contact page contains an empty heading in ${relativePath}`);
     }
+    const contactCard = addresses.find((address) => hasClass(address, "contact-card"));
+    if (!contactCard) {
+      problems.push(`Contact page is missing its formatted contact card in ${relativePath}`);
+    } else {
+      const expectedFields = ["address-title", "address-address", "address-fax", "address-map-link"];
+      const contactFields = contactCard.childNodes.filter((node) => node.tagName === "p");
+      if (contactFields.length !== expectedFields.length || expectedFields.some((className) =>
+        !contactFields.some((field) => hasClass(field, className))
+      )) {
+        problems.push(`Contact page has unexpected contact-card content in ${relativePath}`);
+      }
+    }
     if (!fs.readFileSync(filePath, "utf8").includes("Schulstraße 9")) {
       problems.push(`Contact page is missing the corrected street address in ${relativePath}`);
     }
