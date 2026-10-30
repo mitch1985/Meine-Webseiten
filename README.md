@@ -21,8 +21,9 @@ Pages. Die Website ist unter
 im Repository unter **Settings → Pages** als Quelle **GitHub Actions**
 konfiguriert ist. Das Repository muss öffentlich sein, wenn der GitHub-Tarif
 keine Pages für private Repositories unterstützt; dadurch sind auch Quellcode
-und Repository-Dateien öffentlich. Jeder Push auf `modernisierung` startet
-einen neuen Build und eine Veröffentlichung.
+und Repository-Dateien öffentlich. Die Umgebung `github-pages` muss außerdem
+den Branch `modernisierung` für Deployments zulassen. Jeder Push auf
+`modernisierung` startet einen neuen Build und eine Veröffentlichung.
 
 Für die erstmalige Aktivierung benötigt der Workflow das Repository-Secret
 `GH_PAGES_TOKEN` mit einem Fine-grained Personal Access Token, der auf dieses
