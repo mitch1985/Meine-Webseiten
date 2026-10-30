@@ -92,6 +92,7 @@ for (const filePath of htmlFiles) {
   const headings = [];
   const headingText = [];
   const addresses = [];
+  const themeOptions = [];
   let equipmentLogoCount = 0;
   let title = "";
   const relativePath = path.relative(output, filePath);
@@ -105,6 +106,13 @@ for (const filePath of htmlFiles) {
       if (!heading) problems.push(`Empty heading in ${relativePath}`);
     }
     if (node.tagName === "address") addresses.push(node);
+    if (
+      node.tagName === "option"
+      && node.parentNode?.tagName === "select"
+      && node.parentNode.attrs?.some((attribute) => attribute.name === "id" && attribute.value === "theme-select")
+    ) {
+      themeOptions.push(node.attrs?.find((attribute) => attribute.name === "value")?.value);
+    }
     if (node.tagName === "img") {
       const alt = node.attrs?.find((attribute) => attribute.name === "alt");
       if (!alt) problems.push(`Image is missing an alt attribute in ${relativePath}`);
@@ -143,6 +151,12 @@ for (const filePath of htmlFiles) {
 
   if (!title) problems.push(`Missing document title: ${relativePath}`);
   if (headings.length !== 1) problems.push(`Expected one h1 in ${relativePath}, found ${headings.length}.`);
+  if (
+    relativePath === "index.html"
+    && !["club", "halloween", "autumn", "floodlight", "fancy"].every((theme) => themeOptions.includes(theme))
+  ) {
+    problems.push("Theme selector is missing one or more site themes.");
+  }
   if (!fs.readFileSync(filePath, "utf8").includes("© 2026")) {
     problems.push(`Missing current club copyright in ${relativePath}`);
   }

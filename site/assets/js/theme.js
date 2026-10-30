@@ -3,7 +3,8 @@ const themeColors = new Map([
   ["club", "#e7f2e9"],
   ["halloween", "#eee5f2"],
   ["autumn", "#f3e5d6"],
-  ["floodlight", "#e5eef5"]
+  ["floodlight", "#e5eef5"],
+  ["fancy", "#10251e"]
 ]);
 const savedTheme = window.localStorage.getItem("svh-theme");
 const initialTheme = themeColors.has(savedTheme) ? savedTheme : "club";
