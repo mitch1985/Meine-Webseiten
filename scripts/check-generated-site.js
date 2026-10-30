@@ -7,6 +7,7 @@ const output = path.join(root, "dist");
 const pathPrefix = new URL(process.env.ELEVENTY_PATH_PREFIX || "/", "https://local.test").pathname;
 const archive = require(path.join(root, "site", "_data", "archive.json"));
 const htmlFiles = [];
+const cssFiles = [];
 const problems = [];
 let emptyAltImages = 0;
 
@@ -15,6 +16,7 @@ function walk(directory) {
     const filePath = path.join(directory, entry.name);
     if (entry.isDirectory()) walk(filePath);
     else if (entry.isFile() && entry.name.toLowerCase().endsWith(".html")) htmlFiles.push(filePath);
+    else if (entry.isFile() && entry.name.toLowerCase().endsWith(".css")) cssFiles.push(filePath);
   }
 }
 
@@ -185,6 +187,18 @@ for (const filePath of htmlFiles) {
     const target = localTarget(reference.value, filePath);
     if (target && !fs.existsSync(target)) {
       problems.push(`Broken local ${reference.tag} URL ${reference.value} in ${relativePath}`);
+    }
+  }
+}
+
+for (const filePath of cssFiles) {
+  const contents = fs.readFileSync(filePath, "utf8");
+  const urls = contents.matchAll(/url\(\s*(?:"([^"]+)"|'([^']+)'|([^)]*))\s*\)/g);
+  for (const match of urls) {
+    const value = (match[1] ?? match[2] ?? match[3]).trim();
+    const target = localTarget(value, filePath);
+    if (target && !fs.existsSync(target)) {
+      problems.push(`Broken local CSS URL ${value} in ${path.relative(output, filePath)}`);
     }
   }
 }
