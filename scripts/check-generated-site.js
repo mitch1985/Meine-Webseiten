@@ -54,6 +54,11 @@ function localTarget(value, fromFile) {
     return null;
   }
 
+  const pathPrefix = new URL(process.env.ELEVENTY_PATH_PREFIX || "/", "https://local.test").pathname;
+  if (pathPrefix !== "/" && pathname.startsWith(pathPrefix)) {
+    pathname = `/${pathname.slice(pathPrefix.length)}`;
+  }
+
   const target = path.resolve(output, `.${pathname}`);
   if (target !== output && !target.startsWith(`${output}${path.sep}`)) {
     problems.push(`Path escapes the generated output: ${value}`);

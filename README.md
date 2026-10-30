@@ -13,6 +13,18 @@ Generated output is written to `dist/`.
 - Build the site and import the archive with `npm run build`.
 - Preview the site locally with `npm run serve`.
 
+## Online-Vorschau
+
+GitHub Actions baut und veröffentlicht den Branch `modernisierung` nach GitHub
+Pages. Die Website ist unter
+`https://mitch1985.github.io/Meine-Webseiten/` erreichbar, sobald GitHub Pages
+im Repository für GitHub Actions aktiviert ist. Jeder Push auf `modernisierung`
+startet einen neuen Build und eine Veröffentlichung.
+
+Der Build verwendet dafür das URL-Präfix `/Meine-Webseiten/`; lokal bleibt das
+Präfix `/`. Vor einer Veröffentlichung Kontakt- und Rechtstexte auf Aktualität
+prüfen.
+
 Shared markup is in `site/_includes/layouts/`; theme colors and
 responsive/accessibility styles are in `site/assets/css/site.css`. Imported
 pages and referenced images are generated during the build and are not edited
