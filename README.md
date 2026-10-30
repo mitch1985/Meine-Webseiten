@@ -18,8 +18,9 @@ Generated output is written to `dist/`.
 GitHub Actions baut und veröffentlicht den Branch `modernisierung` nach GitHub
 Pages. Die Website ist unter
 `https://mitch1985.github.io/Meine-Webseiten/` erreichbar, sobald GitHub Pages
-im Repository für GitHub Actions aktiviert ist. Jeder Push auf `modernisierung`
-startet einen neuen Build und eine Veröffentlichung.
+im Repository unter **Settings → Pages** als Quelle **GitHub Actions**
+konfiguriert ist. Jeder Push auf `modernisierung` startet einen neuen Build und
+eine Veröffentlichung.
 
 Der Build verwendet dafür das URL-Präfix `/Meine-Webseiten/`; lokal bleibt das
 Präfix `/`. Vor einer Veröffentlichung Kontakt- und Rechtstexte auf Aktualität
