@@ -19,8 +19,10 @@ GitHub Actions baut und veröffentlicht den Branch `modernisierung` nach GitHub
 Pages. Die Website ist unter
 `https://mitch1985.github.io/Meine-Webseiten/` erreichbar, sobald GitHub Pages
 im Repository unter **Settings → Pages** als Quelle **GitHub Actions**
-konfiguriert ist. Jeder Push auf `modernisierung` startet einen neuen Build und
-eine Veröffentlichung.
+konfiguriert ist. Das Repository muss öffentlich sein, wenn der GitHub-Tarif
+keine Pages für private Repositories unterstützt; dadurch sind auch Quellcode
+und Repository-Dateien öffentlich. Jeder Push auf `modernisierung` startet
+einen neuen Build und eine Veröffentlichung.
 
 Für die erstmalige Aktivierung benötigt der Workflow das Repository-Secret
 `GH_PAGES_TOKEN` mit einem Fine-grained Personal Access Token, der auf dieses
