@@ -130,6 +130,14 @@ for (const filePath of htmlFiles) {
           problems.push(`Missing deployment path prefix in local URL ${attribute.value} in ${relativePath}`);
         }
       }
+      if (attribute.name === "srcset" && pathPrefix !== "/") {
+        for (const candidate of attribute.value.split(",")) {
+          const value = candidate.trim().split(/\s+/, 1)[0];
+          if (value.startsWith("/") && !value.startsWith(pathPrefix)) {
+            problems.push(`Missing deployment path prefix in srcset URL ${value} in ${relativePath}`);
+          }
+        }
+      }
     }
   });
 
