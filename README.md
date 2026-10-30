@@ -22,6 +22,11 @@ im Repository unter **Settings → Pages** als Quelle **GitHub Actions**
 konfiguriert ist. Jeder Push auf `modernisierung` startet einen neuen Build und
 eine Veröffentlichung.
 
+Für die erstmalige Aktivierung benötigt der Workflow das Repository-Secret
+`GH_PAGES_TOKEN` mit einem GitHub-Token, das Pages verwalten darf. Das Secret
+wird unter **Settings → Secrets and variables → Actions** angelegt und nicht
+im Repository gespeichert.
+
 Der Build verwendet dafür das URL-Präfix `/Meine-Webseiten/`; lokal bleibt das
 Präfix `/`. Vor einer Veröffentlichung Kontakt- und Rechtstexte auf Aktualität
 prüfen.

@@ -41,6 +41,11 @@ jobs:
         run: npm test
         env:
           ELEVENTY_PATH_PREFIX: /Meine-Webseiten/
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+          token: ${{ secrets.GH_PAGES_TOKEN }}
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
