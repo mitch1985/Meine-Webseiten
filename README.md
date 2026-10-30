@@ -27,7 +27,8 @@ Für die erstmalige Aktivierung benötigt der Workflow das Repository-Secret
 Repository beschränkt ist und **Administration: Read and write** sowie
 **Pages: Read and write** besitzt. Das Secret wird unter
 **Settings → Secrets and variables → Actions** angelegt und nicht im
-Repository gespeichert.
+Repository gespeichert. Als Secret-Wert muss der vollständige Token verwendet
+werden, nicht sein Name oder ein Platzhalter.
 
 Der Build verwendet dafür das URL-Präfix `/Meine-Webseiten/`; lokal bleibt das
 Präfix `/`. Vor einer Veröffentlichung Kontakt- und Rechtstexte auf Aktualität
