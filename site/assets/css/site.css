@@ -140,7 +140,7 @@ body::after {
 
 :root[data-theme="autumn"] body::before,
 :root[data-theme="autumn"] body::after {
-  background-image: url("/assets/images/seasonal/autumn-leaves.svg");
+  background-image: url("../images/seasonal/autumn-leaves.svg");
   opacity: 0.18;
 }
 
@@ -161,7 +161,7 @@ body::after {
   top: 28vh;
   right: 0.75rem;
   width: clamp(8rem, 14vw, 12rem);
-  background-image: url("/assets/images/seasonal/halloween-pumpkin.svg");
+  background-image: url("../images/seasonal/halloween-pumpkin.svg");
   opacity: 0.2;
   animation-delay: -8s;
 }
@@ -169,7 +169,7 @@ body::after {
 :root[data-theme="halloween"] body::after {
   bottom: 9vh;
   left: 0.5rem;
-  background-image: url("/assets/images/seasonal/halloween-web.svg");
+  background-image: url("../images/seasonal/halloween-web.svg");
   opacity: 0.18;
   animation-duration: 21s;
 }

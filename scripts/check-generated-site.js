@@ -4,6 +4,7 @@ const { parse } = require("parse5");
 
 const root = path.resolve(__dirname, "..");
 const output = path.join(root, "dist");
+const pathPrefix = new URL(process.env.ELEVENTY_PATH_PREFIX || "/", "https://local.test").pathname;
 const archive = require(path.join(root, "site", "_data", "archive.json"));
 const htmlFiles = [];
 const problems = [];
@@ -54,7 +55,6 @@ function localTarget(value, fromFile) {
     return null;
   }
 
-  const pathPrefix = new URL(process.env.ELEVENTY_PATH_PREFIX || "/", "https://local.test").pathname;
   if (pathPrefix !== "/" && pathname.startsWith(pathPrefix)) {
     pathname = `/${pathname.slice(pathPrefix.length)}`;
   }
@@ -120,6 +120,13 @@ for (const filePath of htmlFiles) {
       }
       if (["href", "src", "poster"].includes(attribute.name) && !attribute.value.startsWith("#")) {
         references.push({ type: "url", value: attribute.value, tag: node.tagName });
+        if (
+          pathPrefix !== "/"
+          && attribute.value.startsWith("/")
+          && !attribute.value.startsWith(pathPrefix)
+        ) {
+          problems.push(`Missing deployment path prefix in local URL ${attribute.value} in ${relativePath}`);
+        }
       }
     }
   });

@@ -8,6 +8,7 @@ const archiveRoot = path.join(root, "sv-hagenbuechach.de", "sv-hagenbuechach.de"
 const generatedOutput = path.join(root, "dist");
 const generatedData = path.join(root, "site", "_data", "archive.json");
 const generatedAssets = path.join(root, "site", "assets", "archive");
+const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
 const ignoredDirectories = new Set(["_processed_", "_temp_", "typo3temp"]);
 const utilityPages = new Set([
   "fitness/manifest.json.html",
@@ -228,6 +229,18 @@ function copyAsset(sourceRelativePath) {
   return `/assets/archive/${assetPath.split("/").map(encodeURIComponent).join("/")}`;
 }
 
+function prefixSitePath(value) {
+  if (pathPrefix === "/" || !value?.startsWith("/") || value.startsWith("//")) return value;
+  const prefix = pathPrefix.replace(/\/+$/, "");
+  return value === prefix || value.startsWith(`${prefix}/`) ? value : `${prefix}${value}`;
+}
+
+function stripSitePathPrefix(value) {
+  if (pathPrefix === "/") return value;
+  const prefix = pathPrefix.replace(/\/+$/, "");
+  return value.startsWith(`${prefix}/`) ? value.slice(prefix.length) : value;
+}
+
 function extractSponsorLogos(content) {
   const fragment = parseFragment(content);
   const sponsors = [];
@@ -251,7 +264,11 @@ function extractSponsorLogos(content) {
         const imageAttributes = Object.fromEntries((images[0].attrs ?? []).map(({ name, value }) => [name, value]));
         const name = attributes.title || imageAttributes.alt || textContent(node);
         if (name && imageAttributes.src) {
-          sponsors.push({ name, href: attributes.href, image: imageAttributes.src });
+          sponsors.push({
+            name,
+            href: attributes.href,
+            image: stripSitePathPrefix(imageAttributes.src)
+          });
         }
       }
     }
@@ -375,7 +392,7 @@ function cleanClubContactPage(page) {
 function updateEquipmentPage(page) {
   const fragment = parseFragment(page.content);
   const partnerName = "Günther's Sport-Shop Nürnberg";
-  const logoPath = "/assets/archive/fileadmin/_processed_/3/5/csm_logoguenthers_ef691f1468.png";
+  const logoPath = prefixSitePath("/assets/archive/fileadmin/_processed_/3/5/csm_logoguenthers_ef691f1468.png");
   let galleryCount = 0;
   let headingCount = 0;
   let linkedNameCount = 0;
@@ -708,7 +725,7 @@ function rewriteSrcset(value, sourcePath, routeBySource) {
     .map((candidate) => {
       const [url, ...descriptor] = candidate.trim().split(/\s+/);
       if (!url) return "";
-      return [rewriteUrl(url, sourcePath, routeBySource, true), ...descriptor].join(" ");
+      return [prefixSitePath(rewriteUrl(url, sourcePath, routeBySource, true)), ...descriptor].join(" ");
     })
     .filter(Boolean)
     .join(", ");
@@ -742,11 +759,11 @@ function cleanNode(node, sourcePath, routeBySource) {
       } else if (attribute.name === "href") {
         const href = rewriteUrl(attribute.value, sourcePath, routeBySource, false);
         if (href === null) removeAttribute(node, "href");
-        else setAttribute(node, "href", href);
+        else setAttribute(node, "href", prefixSitePath(href));
       } else if (["src", "poster"].includes(attribute.name)) {
         const source = rewriteUrl(attribute.value, sourcePath, routeBySource, true);
         if (source === null) removeAttribute(node, attribute.name);
-        else setAttribute(node, attribute.name, source);
+        else setAttribute(node, attribute.name, prefixSitePath(source));
       } else if (attribute.name === "srcset") {
         setAttribute(node, "srcset", rewriteSrcset(attribute.value, sourcePath, routeBySource));
       }
