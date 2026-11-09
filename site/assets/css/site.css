@@ -135,7 +135,10 @@
 
 :root[data-theme="club-red"] {
   color-scheme: light;
-  --color-brand-green: #c8102e;
+  --fcn-red: #aa1124;
+  --fcn-black: #171719;
+  --fcn-white: #ffffff;
+  --color-brand-green: var(--fcn-red);
   --color-header: #171719;
   --color-header-text: #ffffff;
   --color-header-text-hover: #ffccd4;
@@ -144,7 +147,7 @@
   --color-footer: #171719;
   --color-footer-text: #f0e9ea;
   --color-footer-link: #ffccd4;
-  --color-brand-accent: #c8102e;
+  --color-brand-accent: var(--fcn-red);
   --color-brand-soft: #fff0f2;
   --color-brand-border: #efb9c2;
   --color-page: #f5f2f1;
@@ -152,12 +155,12 @@
   --color-surface-muted: #eee8e8;
   --color-text: #211b1c;
   --color-muted: #5e5153;
-  --color-primary: #a90d27;
+  --color-primary: var(--fcn-red);
   --color-primary-contrast: #ffffff;
-  --color-accent: #c8102e;
+  --color-accent: var(--fcn-red);
   --color-accent-contrast: #ffffff;
   --color-border: #d7c9cb;
-  --focus-ring: #8d0920;
+  --focus-ring: var(--fcn-red);
   font-family: "Arial Narrow", "Segoe UI", sans-serif;
 }
 
@@ -1571,7 +1574,7 @@ main h6 {
 
 :root[data-theme="club-red"] body {
   background-image:
-    radial-gradient(ellipse at 50% 0, rgb(200 16 46 / 9%), transparent 34rem),
+    radial-gradient(ellipse at 50% 0, rgb(170 17 36 / 9%), transparent 34rem),
     repeating-linear-gradient(135deg, rgb(23 23 25 / 2%) 0 1px, transparent 1px 12px);
 }
 
@@ -1579,9 +1582,15 @@ main h6 {
 :root[data-theme="club-red"] body::after {
   z-index: 1;
   width: clamp(13rem, 24vw, 23rem);
-  border: 0.6rem solid rgb(200 16 46 / 68%);
+  border: 0.6rem solid rgb(170 17 36 / 68%);
   border-radius: 50%;
-  background: radial-gradient(circle, transparent 52%, rgb(200 16 46 / 12%) 53% 58%, transparent 59%);
+  background-color: var(--fcn-white);
+  background-image:
+    url("../images/brand/fcn-logo.svg"),
+    radial-gradient(circle, transparent 52%, rgb(170 17 36 / 12%) 53% 58%, transparent 59%);
+  background-position: center, center;
+  background-repeat: no-repeat;
+  background-size: 68% auto, cover;
   opacity: 0.13;
   animation: matchday-orbit 22s ease-in-out infinite alternate;
 }
@@ -1594,19 +1603,26 @@ main h6 {
 :root[data-theme="club-red"] body::after {
   right: -9rem;
   bottom: 8vh;
-  border-color: rgb(23 23 25 / 45%);
+  width: clamp(12rem, 22vw, 21rem);
+  border: 0.7rem solid var(--fcn-black);
+  border-radius: 1.5rem;
+  background-color: var(--fcn-white);
+  background-image: url("../images/brand/fcn-logo.svg");
+  background-size: 72% auto;
+  box-shadow: 0 0 0 0.35rem var(--fcn-red);
+  opacity: 0.17;
   animation-delay: -11s;
 }
 
 :root[data-theme="club-red"] .site-header {
-  border-bottom: 0.5rem solid #c8102e;
-  background: linear-gradient(180deg, #171719 0%, #171719 88%, #ffffff 88%, #ffffff 93%, #c8102e 93%);
+  border-bottom: 0.5rem solid var(--fcn-red);
+  background: linear-gradient(180deg, #171719 0%, #171719 88%, #ffffff 88%, #ffffff 93%, var(--fcn-red) 93%);
   box-shadow: 0 0.7rem 2rem rgb(23 23 25 / 20%);
 }
 
 :root[data-theme="club-red"] .site-brand img {
   border: 3px solid #ffffff;
-  box-shadow: 0 0 0 3px #c8102e, 0 0 1.2rem rgb(200 16 46 / 35%);
+  box-shadow: 0 0 0 3px var(--fcn-red), 0 0 1.2rem rgb(170 17 36 / 35%);
 }
 
 :root[data-theme="club-red"] .primary-nav-list a,
@@ -1620,7 +1636,7 @@ main h6 {
 :root[data-theme="club-red"] .nav-dropdown > summary:hover,
 :root[data-theme="club-red"] .nav-dropdown[open] > summary {
   transform: translateY(-2px);
-  background: #c8102e;
+  background: var(--fcn-red);
   color: #ffffff;
 }
 
@@ -1630,14 +1646,14 @@ main h6 {
 }
 
 :root[data-theme="club-red"] .theme-control select {
-  border: 2px solid #c8102e;
+  border: 2px solid var(--fcn-red);
   border-radius: 0.35rem;
   background: #ffffff;
   color: #211b1c;
 }
 
 :root[data-theme="club-red"] .site-footer {
-  border-top: 0.5rem solid #c8102e;
+  border-top: 0.5rem solid var(--fcn-red);
   box-shadow: 0 -0.75rem 2rem rgb(23 23 25 / 15%);
 }
 
@@ -1659,7 +1675,7 @@ main h6 {
 :root[data-theme="club-red"] .content-section,
 :root[data-theme="club-red"] .archive-content {
   border: 1px solid var(--color-border);
-  border-top: 0.4rem solid #c8102e;
+  border-top: 0.4rem solid var(--fcn-red);
   border-radius: 0.8rem;
   background-color: var(--color-surface);
   box-shadow: 0 1rem 2.5rem rgb(23 23 25 / 10%);
@@ -1672,7 +1688,7 @@ main h6 {
 
 :root[data-theme="club-red"] .archive-content > header.content-section {
   border: 0;
-  border-left: 0.4rem solid #c8102e;
+  border-left: 0.4rem solid var(--fcn-red);
   border-radius: 0.4rem;
   background: linear-gradient(110deg, #fff0f2, #ffffff);
 }
@@ -1692,7 +1708,7 @@ main h6 {
 :root[data-theme="club-red"] .sponsor-card:hover,
 :root[data-theme="club-red"] .archive-content .gallery-item:hover {
   transform: translateY(-0.3rem);
-  border-color: #c8102e;
+  border-color: var(--fcn-red);
   box-shadow: 0 1rem 2rem rgb(23 23 25 / 16%);
 }
 
@@ -1700,13 +1716,13 @@ main h6 {
   display: inline-block;
   padding: 0.2rem 0.65rem;
   border-radius: 0.25rem;
-  background: #c8102e;
+  background: var(--fcn-red);
   color: #ffffff;
   font-weight: 750;
 }
 
 :root[data-theme="club-red"] .archive-content blockquote {
-  border-left: 0.4rem solid #c8102e;
+  border-left: 0.4rem solid var(--fcn-red);
   border-radius: 0 0.5rem 0.5rem 0;
   background: #fff0f2;
   color: #211b1c;
@@ -1720,27 +1736,27 @@ main h6 {
 :root[data-theme="club-red"] .button {
   border: 2px solid #171719;
   border-radius: 0.4rem;
-  box-shadow: 0.2rem 0.2rem 0 #c8102e;
+  box-shadow: 0.2rem 0.2rem 0 var(--fcn-red);
   transition: box-shadow 160ms ease, transform 160ms ease;
 }
 
 :root[data-theme="club-red"] .social-link:hover,
 :root[data-theme="club-red"] .button:hover {
   transform: translate(2px, 2px);
-  box-shadow: 0.05rem 0.05rem 0 #c8102e;
+  box-shadow: 0.05rem 0.05rem 0 var(--fcn-red);
 }
 
 :root[data-theme="club-red"] .hero {
   min-height: clamp(34rem, 72vw, 48rem);
   margin-bottom: clamp(2.5rem, 7vw, 5rem);
-  border-bottom: 0.65rem solid #c8102e;
+  border-bottom: 0.65rem solid var(--fcn-red);
   background: #171719;
 }
 
 :root[data-theme="club-red"] .hero::after {
   background:
-    radial-gradient(ellipse at 78% 18%, rgb(200 16 46 / 56%), transparent 34%),
-    linear-gradient(125deg, transparent 0 46%, rgb(200 16 46 / 34%) 46% 52%, transparent 52%),
+    radial-gradient(ellipse at 78% 18%, rgb(170 17 36 / 56%), transparent 34%),
+    linear-gradient(125deg, transparent 0 46%, rgb(170 17 36 / 34%) 46% 52%, transparent 52%),
     linear-gradient(90deg, rgb(15 14 16 / 93%) 4%, rgb(23 23 25 / 68%) 48%, rgb(23 23 25 / 10%) 100%),
     linear-gradient(0deg, rgb(15 14 16 / 56%), transparent 62%);
 }
@@ -1773,7 +1789,7 @@ main h6 {
   padding: 0.5rem 0.9rem;
   border: 1px solid rgb(255 255 255 / 65%);
   border-radius: 0.25rem;
-  background: #c8102e;
+  background: var(--fcn-red);
   box-shadow: 0.3rem 0.3rem 0 #ffffff;
   color: #ffffff;
   font-size: clamp(0.75rem, 1.5vw, 0.95rem);
@@ -1797,12 +1813,28 @@ main h6 {
   align-content: center;
   justify-items: center;
   transform: rotate(8deg);
-  border: 0.45rem solid #ffffff;
+  border: 0.45rem solid var(--fcn-white);
   border-radius: 50%;
-  background: #c8102e;
-  box-shadow: 0 0 0 0.55rem #171719, 0 1rem 3rem rgb(0 0 0 / 30%);
-  color: #ffffff;
+  background: var(--fcn-red);
+  box-shadow: 0 0 0 0.55rem var(--fcn-black), 0 1rem 3rem rgb(0 0 0 / 30%);
+  color: var(--fcn-white);
   animation: hero-stamp-bob 5s ease-in-out infinite;
+}
+
+:root[data-theme="club-red"] .hero-stamp::before {
+  position: absolute;
+  top: 12%;
+  width: clamp(1.6rem, 3.6vw, 2.4rem);
+  aspect-ratio: 1;
+  border: 0.2rem solid var(--fcn-white);
+  border-radius: 50%;
+  background: var(--fcn-white) url("../images/brand/fcn-logo.svg") center / contain no-repeat;
+  box-shadow: 0 0 0 0.2rem var(--fcn-red), 0 0 0 0.38rem var(--fcn-white);
+  content: "";
+}
+
+:root[data-theme="club-red"] .hero-stamp span {
+  margin-top: 2.1rem;
 }
 
 :root[data-theme="club-red"] .hero-stamp span {
@@ -1810,14 +1842,6 @@ main h6 {
   font-weight: 950;
   letter-spacing: -0.1em;
   line-height: 0.95;
-}
-
-:root[data-theme="club-red"] .club-red-crest {
-  width: clamp(1.7rem, 3.8vw, 2.7rem);
-  height: auto;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 0 2px #ffffff;
 }
 
 :root[data-theme="club-red"] .hero-stamp small {
@@ -1838,7 +1862,7 @@ main h6 {
   overflow: hidden;
   transform: rotate(-1.5deg);
   border-block: 2px solid #ffffff;
-  background: #c8102e;
+  background: var(--fcn-red);
   color: #ffffff;
 }
 
@@ -1857,15 +1881,25 @@ main h6 {
 }
 
 :root[data-theme="club-red"] .hero-marquee-track b {
-  padding-inline: 1rem;
-  color: #ffffff;
+  display: inline-block;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-inline: 0.8rem;
+  overflow: hidden;
+  border: 2px solid var(--fcn-white);
+  border-radius: 50%;
+  background: var(--fcn-white) url("../images/brand/fcn-logo.svg") center / contain no-repeat;
+  box-shadow: 0 0 0 2px var(--fcn-red);
+  color: transparent;
+  font-size: 0;
+  vertical-align: middle;
 }
 
 :root[data-theme="club-red"] .hero a.button {
   padding: 1rem 1.4rem;
   border: 2px solid #ffffff;
   border-radius: 0.4rem;
-  background: #c8102e;
+  background: var(--fcn-red);
   box-shadow: 0.35rem 0.35rem 0 #ffffff;
   color: #ffffff;
   font-size: 1.05rem;
@@ -2168,7 +2202,22 @@ main h6 {
     right: 1.75rem;
     width: clamp(7rem, 27vw, 9rem);
     border-width: 0.3rem;
-    box-shadow: 0 0 0 0.35rem #171719, 0 0.7rem 2rem rgb(0 0 0 / 30%);
+    box-shadow: 0 0 0 0.35rem var(--fcn-black), 0 0.7rem 2rem rgb(0 0 0 / 30%);
+  }
+
+  :root[data-theme="club-red"] .hero-stamp::before {
+    top: 7%;
+    width: 1.3rem;
+  }
+
+  :root[data-theme="club-red"] .hero-stamp span {
+    margin-top: 1.1rem;
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  :root[data-theme="club-red"] .hero-stamp small {
+    margin-top: 0.2rem;
+    font-size: 0.65rem;
   }
 
   :root[data-theme="club-red"] .hero-marquee {
