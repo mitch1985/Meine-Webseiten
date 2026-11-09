@@ -153,7 +153,7 @@ for (const filePath of htmlFiles) {
   if (headings.length !== 1) problems.push(`Expected one h1 in ${relativePath}, found ${headings.length}.`);
   if (
     relativePath === "index.html"
-    && !["club", "halloween", "autumn", "floodlight", "fancy"].every((theme) => themeOptions.includes(theme))
+    && !["club", "halloween", "autumn", "floodlight", "fancy", "club-red"].every((theme) => themeOptions.includes(theme))
   ) {
     problems.push("Theme selector is missing one or more site themes.");
   }

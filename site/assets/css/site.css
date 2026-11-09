@@ -133,6 +133,34 @@
   font-family: "Trebuchet MS", system-ui, sans-serif;
 }
 
+:root[data-theme="club-red"] {
+  color-scheme: light;
+  --color-brand-green: #c8102e;
+  --color-header: #171719;
+  --color-header-text: #ffffff;
+  --color-header-text-hover: #ffccd4;
+  --color-header-hover: rgb(255 255 255 / 10%);
+  --color-header-border: rgb(255 255 255 / 20%);
+  --color-footer: #171719;
+  --color-footer-text: #f0e9ea;
+  --color-footer-link: #ffccd4;
+  --color-brand-accent: #c8102e;
+  --color-brand-soft: #fff0f2;
+  --color-brand-border: #efb9c2;
+  --color-page: #f5f2f1;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eee8e8;
+  --color-text: #211b1c;
+  --color-muted: #5e5153;
+  --color-primary: #a90d27;
+  --color-primary-contrast: #ffffff;
+  --color-accent: #c8102e;
+  --color-accent-contrast: #ffffff;
+  --color-border: #d7c9cb;
+  --focus-ring: #8d0920;
+  font-family: "Arial Narrow", "Segoe UI", sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -1541,6 +1569,306 @@ main h6 {
   box-shadow: 0.15rem 0.15rem 0 #e34a98;
 }
 
+:root[data-theme="club-red"] body {
+  background-image:
+    radial-gradient(ellipse at 50% 0, rgb(200 16 46 / 9%), transparent 34rem),
+    repeating-linear-gradient(135deg, rgb(23 23 25 / 2%) 0 1px, transparent 1px 12px);
+}
+
+:root[data-theme="club-red"] body::before,
+:root[data-theme="club-red"] body::after {
+  z-index: 1;
+  width: clamp(13rem, 24vw, 23rem);
+  border: 0.6rem solid rgb(200 16 46 / 68%);
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 52%, rgb(200 16 46 / 12%) 53% 58%, transparent 59%);
+  opacity: 0.13;
+  animation: matchday-orbit 22s ease-in-out infinite alternate;
+}
+
+:root[data-theme="club-red"] body::before {
+  top: 16vh;
+  left: -9rem;
+}
+
+:root[data-theme="club-red"] body::after {
+  right: -9rem;
+  bottom: 8vh;
+  border-color: rgb(23 23 25 / 45%);
+  animation-delay: -11s;
+}
+
+:root[data-theme="club-red"] .site-header {
+  border-bottom: 0.5rem solid #c8102e;
+  background: linear-gradient(180deg, #171719 0%, #171719 88%, #ffffff 88%, #ffffff 93%, #c8102e 93%);
+  box-shadow: 0 0.7rem 2rem rgb(23 23 25 / 20%);
+}
+
+:root[data-theme="club-red"] .site-brand img {
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 3px #c8102e, 0 0 1.2rem rgb(200 16 46 / 35%);
+}
+
+:root[data-theme="club-red"] .primary-nav-list a,
+:root[data-theme="club-red"] .nav-dropdown > summary {
+  margin-block: 0.15rem;
+  border-radius: 0.35rem;
+  transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+:root[data-theme="club-red"] .primary-nav-list a:hover,
+:root[data-theme="club-red"] .nav-dropdown > summary:hover,
+:root[data-theme="club-red"] .nav-dropdown[open] > summary {
+  transform: translateY(-2px);
+  background: #c8102e;
+  color: #ffffff;
+}
+
+:root[data-theme="club-red"] .nav-dropdown > ul {
+  border-top: 0.25rem solid #ffffff;
+  background: #171719;
+}
+
+:root[data-theme="club-red"] .theme-control select {
+  border: 2px solid #c8102e;
+  border-radius: 0.35rem;
+  background: #ffffff;
+  color: #211b1c;
+}
+
+:root[data-theme="club-red"] .site-footer {
+  border-top: 0.5rem solid #c8102e;
+  box-shadow: 0 -0.75rem 2rem rgb(23 23 25 / 15%);
+}
+
+:root[data-theme="club-red"] main h1,
+:root[data-theme="club-red"] main h2,
+:root[data-theme="club-red"] main h3 {
+  font-weight: 850;
+  letter-spacing: -0.045em;
+}
+
+:root[data-theme="club-red"] main h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+:root[data-theme="club-red"] main h2 {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+}
+
+:root[data-theme="club-red"] .content-section,
+:root[data-theme="club-red"] .archive-content {
+  border: 1px solid var(--color-border);
+  border-top: 0.4rem solid #c8102e;
+  border-radius: 0.8rem;
+  background-color: var(--color-surface);
+  box-shadow: 0 1rem 2.5rem rgb(23 23 25 / 10%);
+}
+
+:root[data-theme="club-red"] .home-introduction {
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border-top-color: #171719;
+}
+
+:root[data-theme="club-red"] .archive-content > header.content-section {
+  border: 0;
+  border-left: 0.4rem solid #c8102e;
+  border-radius: 0.4rem;
+  background: linear-gradient(110deg, #fff0f2, #ffffff);
+}
+
+:root[data-theme="club-red"] .archive-card,
+:root[data-theme="club-red"] .link-card,
+:root[data-theme="club-red"] .sponsor-card,
+:root[data-theme="club-red"] .archive-content .gallery-item {
+  border: 1px solid var(--color-border);
+  border-radius: 0.65rem;
+  box-shadow: 0 0.6rem 1.3rem rgb(23 23 25 / 9%);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+:root[data-theme="club-red"] .archive-card:hover,
+:root[data-theme="club-red"] .link-card:hover,
+:root[data-theme="club-red"] .sponsor-card:hover,
+:root[data-theme="club-red"] .archive-content .gallery-item:hover {
+  transform: translateY(-0.3rem);
+  border-color: #c8102e;
+  box-shadow: 0 1rem 2rem rgb(23 23 25 / 16%);
+}
+
+:root[data-theme="club-red"] .archive-date {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 0.25rem;
+  background: #c8102e;
+  color: #ffffff;
+  font-weight: 750;
+}
+
+:root[data-theme="club-red"] .archive-content blockquote {
+  border-left: 0.4rem solid #c8102e;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background: #fff0f2;
+  color: #211b1c;
+}
+
+:root[data-theme="club-red"] .archive-content th {
+  background: #fff0f2;
+}
+
+:root[data-theme="club-red"] .social-link,
+:root[data-theme="club-red"] .button {
+  border: 2px solid #171719;
+  border-radius: 0.4rem;
+  box-shadow: 0.2rem 0.2rem 0 #c8102e;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+:root[data-theme="club-red"] .social-link:hover,
+:root[data-theme="club-red"] .button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 0.05rem 0.05rem 0 #c8102e;
+}
+
+:root[data-theme="club-red"] .hero {
+  min-height: clamp(34rem, 72vw, 48rem);
+  margin-bottom: clamp(2.5rem, 7vw, 5rem);
+  border-bottom: 0.65rem solid #c8102e;
+  background: #171719;
+}
+
+:root[data-theme="club-red"] .hero::after {
+  background:
+    radial-gradient(ellipse at 78% 18%, rgb(200 16 46 / 56%), transparent 34%),
+    linear-gradient(125deg, transparent 0 46%, rgb(200 16 46 / 34%) 46% 52%, transparent 52%),
+    linear-gradient(90deg, rgb(15 14 16 / 93%) 4%, rgb(23 23 25 / 68%) 48%, rgb(23 23 25 / 10%) 100%),
+    linear-gradient(0deg, rgb(15 14 16 / 56%), transparent 62%);
+}
+
+:root[data-theme="club-red"] .hero-image {
+  object-position: center 48%;
+  filter: saturate(1.22) contrast(1.08);
+  animation: hero-image-drift 24s ease-in-out infinite alternate;
+}
+
+:root[data-theme="club-red"] .hero-content {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(5rem, 11vw, 9rem) clamp(7rem, 13vw, 11rem);
+  animation: hero-content-arrive 800ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+:root[data-theme="club-red"] .hero h1 {
+  max-width: 13ch;
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 950;
+  letter-spacing: -0.07em;
+  line-height: 0.92;
+  text-shadow: 0 0.08em 0 rgb(0 0 0 / 35%);
+}
+
+:root[data-theme="club-red"] .hero .eyebrow {
+  display: inline-flex;
+  margin-bottom: 1.2rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgb(255 255 255 / 65%);
+  border-radius: 0.25rem;
+  background: #c8102e;
+  box-shadow: 0.3rem 0.3rem 0 #ffffff;
+  color: #ffffff;
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+}
+
+:root[data-theme="club-red"] .hero-copy {
+  max-width: 34rem;
+  color: #ffffff;
+  font-size: clamp(1.15rem, 2.7vw, 1.6rem);
+  text-shadow: 0 2px 14px rgb(0 0 0 / 35%);
+}
+
+:root[data-theme="club-red"] .hero-stamp {
+  position: absolute;
+  z-index: 1;
+  top: clamp(2rem, 7vw, 6rem);
+  right: max(5vw, calc((100vw - var(--content-width)) / 2));
+  display: grid;
+  width: clamp(8.5rem, 18vw, 15rem);
+  aspect-ratio: 1;
+  align-content: center;
+  justify-items: center;
+  transform: rotate(8deg);
+  border: 0.45rem solid #ffffff;
+  border-radius: 50%;
+  background: #c8102e;
+  box-shadow: 0 0 0 0.55rem #171719, 0 1rem 3rem rgb(0 0 0 / 30%);
+  color: #ffffff;
+  animation: hero-stamp-bob 5s ease-in-out infinite;
+}
+
+:root[data-theme="club-red"] .hero-stamp span {
+  font-size: clamp(2.6rem, 6vw, 5.3rem);
+  font-weight: 950;
+  letter-spacing: -0.1em;
+  line-height: 0.95;
+}
+
+:root[data-theme="club-red"] .hero-stamp small {
+  margin-top: 0.45rem;
+  font-size: clamp(0.7rem, 1.4vw, 1rem);
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+:root[data-theme="club-red"] .hero-marquee {
+  position: absolute;
+  z-index: 1;
+  right: -1%;
+  bottom: 1.65rem;
+  left: -1%;
+  display: block;
+  overflow: hidden;
+  transform: rotate(-1.5deg);
+  border-block: 2px solid #ffffff;
+  background: #c8102e;
+  color: #ffffff;
+}
+
+:root[data-theme="club-red"] .hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee-scroll 28s linear infinite;
+}
+
+:root[data-theme="club-red"] .hero-marquee-track span {
+  padding-block: 0.65rem;
+  font-size: clamp(0.85rem, 1.8vw, 1.2rem);
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+:root[data-theme="club-red"] .hero-marquee-track b {
+  padding-inline: 1rem;
+  color: #ffffff;
+}
+
+:root[data-theme="club-red"] .hero a.button {
+  padding: 1rem 1.4rem;
+  border: 2px solid #ffffff;
+  border-radius: 0.4rem;
+  background: #c8102e;
+  box-shadow: 0.35rem 0.35rem 0 #ffffff;
+  color: #ffffff;
+  font-size: 1.05rem;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+:root[data-theme="club-red"] .hero a.button:hover {
+  transform: translate(0.2rem, 0.2rem);
+  box-shadow: 0.15rem 0.15rem 0 #ffffff;
+}
+
 @keyframes hero-image-drift {
   from {
     transform: scale(1.03);
@@ -1580,6 +1908,12 @@ main h6 {
 @keyframes fancy-orbit {
   to {
     transform: translateY(-2rem) rotate(18deg);
+  }
+}
+
+@keyframes matchday-orbit {
+  to {
+    transform: translateY(-1.5rem) rotate(12deg);
   }
 }
 
@@ -1790,6 +2124,56 @@ main h6 {
 
   :root[data-theme="fancy"] .home-introduction h2 {
     font-size: clamp(1.8rem, 8vw, 2.7rem);
+  }
+
+  :root[data-theme="club-red"] body::before,
+  :root[data-theme="club-red"] body::after {
+    width: clamp(8rem, 27vw, 11rem);
+    opacity: 0.08 !important;
+  }
+
+  :root[data-theme="club-red"] body::before {
+    top: 24vh;
+    left: -4rem;
+  }
+
+  :root[data-theme="club-red"] body::after {
+    right: -4rem;
+    bottom: 8vh;
+  }
+
+  :root[data-theme="club-red"] .hero {
+    min-height: 43rem;
+  }
+
+  :root[data-theme="club-red"] .hero-content {
+    padding-block: 2rem 7rem;
+  }
+
+  :root[data-theme="club-red"] .hero h1 {
+    max-width: 12ch;
+    font-size: clamp(2.5rem, 10vw, 4.5rem);
+  }
+
+  :root[data-theme="club-red"] .hero-stamp {
+    top: 2rem;
+    right: 1.75rem;
+    width: clamp(7rem, 27vw, 9rem);
+    border-width: 0.3rem;
+    box-shadow: 0 0 0 0.35rem #171719, 0 0.7rem 2rem rgb(0 0 0 / 30%);
+  }
+
+  :root[data-theme="club-red"] .hero-marquee {
+    bottom: 1.25rem;
+  }
+
+  :root[data-theme="club-red"] .home-introduction {
+    position: relative;
+    z-index: 1;
+    margin-top: -1rem;
+    padding: 1.5rem;
+    border-top-width: 0.35rem;
+    border-radius: 0.75rem;
   }
 }
 
