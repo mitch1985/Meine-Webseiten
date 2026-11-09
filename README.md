@@ -41,8 +41,9 @@ Shared markup is in `site/_includes/layouts/`; theme colors and
 responsive/accessibility styles are in `site/assets/css/site.css`. Imported
 pages and referenced images are generated during the build and are not edited
 by hand. The theme selector offers the club, Halloween, autumn, floodlight,
-colorful animated Fancy, and red-and-black 1. FC Nürnberg-inspired themes, and
-stores the selected theme in the browser.
+colorful animated Fancy, and red-and-black 1. FC Nürnberg-inspired themes. The
+standard club theme adds a decorative rose to the homepage hero image. Theme
+selection is stored in the browser.
 The Nürnberg theme uses the 1. FC Nürnberg crest from
 [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:1._FC_N%C3%BCrnberg_logo.svg);
 the file is marked public domain there, with a separate trademark notice.

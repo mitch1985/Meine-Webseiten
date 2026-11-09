@@ -329,6 +329,27 @@ select:focus-visible {
   pointer-events: none;
 }
 
+:root[data-theme="club"] .hero::before {
+  position: absolute;
+  z-index: 0;
+  top: 8%;
+  right: max(4vw, calc((100vw - var(--content-width)) / 2));
+  display: block;
+  width: clamp(7rem, 14vw, 11rem);
+  aspect-ratio: 11 / 14;
+  transform: rotate(9deg);
+  background: url("../images/seasonal/rose.svg") center / contain no-repeat;
+  content: "";
+  opacity: 0.96;
+  pointer-events: none;
+  filter: drop-shadow(0 0.5rem 1rem rgb(0 0 0 / 45%));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
 .site-header-top {
   width: min(100%, var(--content-width));
   min-height: 3.35rem;
@@ -2003,6 +2024,13 @@ main h6 {
   :root[data-theme="halloween"] .hero::before {
     top: 0.75rem;
     right: 1rem;
+  }
+
+  :root[data-theme="club"] .hero::before {
+    top: 1rem;
+    right: 1rem;
+    width: 5.5rem;
+    opacity: 0.88;
   }
 
   .site-header {
