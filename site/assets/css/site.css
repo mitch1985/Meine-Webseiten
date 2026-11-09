@@ -1812,6 +1812,14 @@ main h6 {
   line-height: 0.95;
 }
 
+:root[data-theme="club-red"] .club-red-crest {
+  width: clamp(1.7rem, 3.8vw, 2.7rem);
+  height: auto;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
 :root[data-theme="club-red"] .hero-stamp small {
   margin-top: 0.45rem;
   font-size: clamp(0.7rem, 1.4vw, 1rem);

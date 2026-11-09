@@ -43,6 +43,9 @@ pages and referenced images are generated during the build and are not edited
 by hand. The theme selector offers the club, Halloween, autumn, floodlight,
 colorful animated Fancy, and red-and-black 1. FC Nürnberg-inspired themes, and
 stores the selected theme in the browser.
+The Nürnberg theme uses the 1. FC Nürnberg crest from
+[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:1._FC_N%C3%BCrnberg_logo.svg);
+the file is marked public domain there, with a separate trademark notice.
 
 News and event entries remain individual pages and are grouped into generated
 archive indexes. General pages are organized into sport, club, and legal
